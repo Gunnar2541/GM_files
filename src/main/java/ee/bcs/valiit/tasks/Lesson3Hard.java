@@ -14,11 +14,13 @@ public class Lesson3Hard {
         System.out.println("Les Kata6 camelCase");
         //System.out.println(toCamelCase("the_Stealth-warrior"));
         System.out.println("Les Kata6 deletePhoto");
-        int[] elements = {1,1,3,3,7,2,2,2,2};
+        int[] elements = {7,1,2,1,2,1,21,2,1,2,7,7,7};
         int maxOccurrences =2;
-        System.out.println(deleteNth(elements, maxOccurrences));
+        System.out.println(Arrays.toString(deleteNth(elements, maxOccurrences)));
+        for(int i : (deleteNth(elements, maxOccurrences))){
+            System.out.print(i+", ");}
 
-}
+    }
     public static int evenFibonacci(int x) {
         // TODO liida kokku kõik paaris fibonacci arvud kuni numbrini x
         int i = 0;
@@ -113,24 +115,23 @@ class Solution{
  */
 
     public static int[] deleteNth(int[] elements, int maxOccurrences) {
-        //int[] elements = {1,1,3,3,7,2,2,2,2};
-        //int maxOccurrences =2;
-        List<String> newElements = new ArrayList<>();
-        int arv = elements[0];
-        for(int i=0; i<elements.length; i++ ) {
-            int elementCount =1;
-            int elementCountNew=0;
-            for (int j = 1; j < elements.length; j++){
-                if (elements[i] == elements[j]);
-                   elementCount++;
-                   if (newElements.contains(i))
-                   while (elementCount<=maxOccurrences){
-
-                   }
-    }}
-
-    int[] newElement
-
-        return null;
+        ArrayList<Integer> convListA = new ArrayList<>();
+        int elementPosition = -1;
+        while (elementPosition + 1 < elements.length) {
+            elementPosition++;
+            int elementCounter = 0;
+            for (int i = 0; i < convListA.size(); i++) {
+                if (elements[elementPosition] == convListA.get(i)) {
+                    elementCounter++;
+                }
+            }
+            if (elementCounter < maxOccurrences)
+                convListA.add(elements[elementPosition]);
+        }
+        int[] convList = new int[convListA.size()];
+        for (int j = 0; j < convListA.size(); j++) {
+            convList[j] = convListA.get(j);
+        }
+        return convList;
     }
 }
