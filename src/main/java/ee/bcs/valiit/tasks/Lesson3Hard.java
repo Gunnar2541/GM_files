@@ -23,7 +23,10 @@ public class Lesson3Hard {
         int n=12;
         System.out.println(toBinary(n)); //Kata 8
         int[] arr = {2, 1, 1, 10, 3, 15};
-        System.out.println(sumOfDifferences(arr)); //Kata 8
+        System.out.println(sumOfDifferences(arr)); //Kata 7
+        int knight = 0;
+        long pawn = 7;
+        redKnight(knight, pawn); //Kata 7
 
     }
     public static int evenFibonacci(int x) {
@@ -178,11 +181,34 @@ class Solution{
         }
         return result;
     }
-}
+
 /*
     public static int sumOfDifferences(int[] arr) {
         Arrays.sort(arr);
         return arr.length <= 1 ? 0 : arr[arr.length-1] - arr[0];
     }
  */
+public static void redKnight(int knight, long pawn) {
 
+    long knightDistance = 0;
+    String color = "Black";
+    int knightPosition = 0;
+    int pawnStep = 1;
+    int knightStep = 2;
+    knightDistance = pawn*2;
+
+        /*while (knightDistance < pawn) {
+            knightDistance += knightStep;
+            pawn += pawnStep;
+        }*/
+    if (knight == 0 && knightDistance % 4 == 0 || knight == 1 && knightDistance % 4 == 2)
+        color = "White";
+    knightPosition = 0;
+
+    System.out.println(pawn);
+    System.out.println(knightDistance);
+    System.out.println("Knight final color is: " + color);
+    System.out.println("Knight final position is: " + knightPosition);
+    System.out.println("test"  +10%4);
+}
+}
