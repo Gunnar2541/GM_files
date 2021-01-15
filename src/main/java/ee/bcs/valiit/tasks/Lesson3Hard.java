@@ -16,9 +16,14 @@ public class Lesson3Hard {
         System.out.println("Les Kata6 deletePhoto");
         int[] elements = {7,1,2,1,2,1,21,2,1,2,7,7,7};
         int maxOccurrences =2;
-        System.out.println(Arrays.toString(deleteNth(elements, maxOccurrences)));
+        System.out.println(Arrays.toString(deleteNth(elements, maxOccurrences))); //Kata 6
         for(int i : (deleteNth(elements, maxOccurrences))){
             System.out.print(i+", ");}
+        System.out.println(howOld()); //Kata 8
+        int n=12;
+        System.out.println(toBinary(n)); //Kata 8
+        int[] arr = {2, 1, 1, 10, 3, 15};
+        System.out.println(sumOfDifferences(arr)); //Kata 8
 
     }
     public static int evenFibonacci(int x) {
@@ -134,4 +139,50 @@ class Solution{
         }
         return convList;
     }
+    public static int howOld() {
+        final String herOld = "2 She is";
+        String newString = herOld.substring(0, 1);
+        int result = Integer.parseInt(newString);
+
+        return result;
+    }
+    public static int toBinary(int n) {
+        double multiplier = 0.1;
+        int sum = 0;
+        for (int i = n; n >= 1; n = n / 2) {
+            multiplier *= 10;
+            if (n % 2 != 0)
+                sum += (int) multiplier;
+        }
+        return sum;
+    }
+    public static int sumOfDifferences(int[] arr) {
+        int temp;
+        int arrLength= arr.length;
+        int result=0;
+        if(arr.length<1)
+            return 0;
+        while (arrLength>0) {
+            arrLength--;
+            for (int i = arr.length - 1; i > 0; i--) {
+                if (arr[i] >= arr[i - 1]) {
+                    temp = arr[i - 1];
+                    arr[i - 1] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+            //System.out.println(Arrays.toString(arr));
+        }
+        for (int i =0; i < arr.length - 1; i++) {
+            result=result+(arr[i]-arr[i+1]);
+        }
+        return result;
+    }
 }
+/*
+    public static int sumOfDifferences(int[] arr) {
+        Arrays.sort(arr);
+        return arr.length <= 1 ? 0 : arr[arr.length-1] - arr[0];
+    }
+ */
+
