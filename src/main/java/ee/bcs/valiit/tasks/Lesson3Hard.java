@@ -3,6 +3,7 @@ package ee.bcs.valiit.tasks;
 import java.util.*;
 
 public class Lesson3Hard {
+    static HashMap<String, String> store = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println("Les 3.1.1");
@@ -16,17 +17,22 @@ public class Lesson3Hard {
         System.out.println("Les Kata6 deletePhoto");
         int[] elements = {7,1,2,1,2,1,21,2,1,2,7,7,7};
         int maxOccurrences =2;
-        System.out.println(Arrays.toString(deleteNth(elements, maxOccurrences))); //Kata 6
+        //System.out.println(Arrays.toString(deleteNth(elements, maxOccurrences))); //Kata 6
         for(int i : (deleteNth(elements, maxOccurrences))){
             System.out.print(i+", ");}
-        System.out.println(howOld()); //Kata 8
+        //System.out.println(howOld()); //Kata 8
         int n=12;
-        System.out.println(toBinary(n)); //Kata 8
+        //System.out.println(toBinary(n)); //Kata 8
         int[] arr = {2, 1, 1, 10, 3, 15};
-        System.out.println(sumOfDifferences(arr)); //Kata 7
+        //System.out.println(sumOfDifferences(arr)); //Kata 7
         int knight = 0;
         long pawn = 7;
-        redKnight(knight, pawn); //Kata 7
+        //redKnight(knight, pawn); //Kata 7
+        int[] arrg={15,11,10,7,12,2,3};
+        //System.out.println("Final"+Arrays.toString(solve(arr))); //Kata 7
+        long start = 10000;
+        long limit = 100000;
+        System.out.println(buddy(start, limit)); //Kata 6 - see lahendus CW ajapiiri sisse ei mahu....
 
     }
     public static int evenFibonacci(int x) {
@@ -196,19 +202,84 @@ public static void redKnight(int knight, long pawn) {
     int pawnStep = 1;
     int knightStep = 2;
     knightDistance = pawn*2;
-
         /*while (knightDistance < pawn) {
             knightDistance += knightStep;
             pawn += pawnStep;
         }*/
-    if (knight == 0 && knightDistance % 4 == 0 || knight == 1 && knightDistance % 4 == 2)
+    if (knight == 0 && knightDistance % 4 == 0 || knight == 1 && knightDistance % 4 == 2) {
         color = "White";
-    knightPosition = 0;
-
-    System.out.println(pawn);
+        knightPosition = 0;
+    }
     System.out.println(knightDistance);
     System.out.println("Knight final color is: " + color);
     System.out.println("Knight final position is: " + knightPosition);
-    System.out.println("test"  +10%4);
 }
+    public static int[] solve(int[] arrg){
+        ArrayList<Integer> uusArr = new ArrayList<>();
+        for (int i=0; i< arrg.length; i++){
+            uusArr.add(arrg[i]);
+        }
+        uusArr.sort(null);
+        Collections.reverse(uusArr);
+        for (int i=1; i< uusArr.size()-1; i+=2){
+            uusArr.add(i, uusArr.get(uusArr.size()-1));
+            uusArr.remove(uusArr.size()-1);
+        }
+        for (int i=0; i< arrg.length; i++)
+            arrg[i]= uusArr.get(i);
+
+        return arrg;
+    }/*
+    import java.util.Arrays;
+    class Solution{
+        public static int[] solve (int[] arr){
+            //..
+            Arrays.sort(arr);
+            int[] resOrdered = new int[arr.length];
+            for (int i = 0; i < arr.length; i++){
+                resOrdered[i] = arr[i % 2 == 0 ? arr.length-1-i/2 : i / 2];
+            }            return resOrdered;
+        }    }
+    class Solution{
+    public static int[] solve (int[] arr){
+        List<Integer> temp = new ArrayList<Integer>();
+        Arrays.sort(arr);
+        for (int i = 0, j = arr.length - 1; i <= j; ++i, --j) {
+            if (i != j) temp.add(arr[j]);
+            temp.add(arr[i]);
+        }
+        return temp.stream().mapToInt(i -> i).toArray();
+    }}*/
+
+    public static String buddy(long start, long limit) {
+        HashMap<Long, Long> store = new HashMap<>();
+        String option = "Nothing";
+        long biggest = limit;
+        for (long j = start; j <= biggest; j++) {
+            if(j>=limit)
+                break;
+            long value = sumOfDiv(j);
+            if (j <= limit && biggest < value) {
+                biggest = value;
+            }
+            try {
+                if (store.get(value).equals(j)&&value<j) {
+                    return ("[" + (value) + "," + (j) + "]");
+                }
+            } catch (NullPointerException e) {
+            }
+            store.put(j, value);
+        }
+        return option;
+    }
+
+    public static long sumOfDiv (long hashKey){
+        long hashVal = 0;
+        for (long i = 1; i <= hashKey / 2; i++) {
+            if (hashKey % i == 0)
+                hashVal += i;
+        }
+        return hashVal - 1;
+    }
 }
+
