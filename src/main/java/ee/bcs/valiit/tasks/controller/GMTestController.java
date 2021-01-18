@@ -1,12 +1,9 @@
 package ee.bcs.valiit.tasks.controller;
 
 import ee.bcs.valiit.tasks.Lesson1MathUtil;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("solution")
+@RequestMapping("solution/lesson")
 @RestController
 public class GMTestController {
 
@@ -15,23 +12,23 @@ public class GMTestController {
         return "Hello World";
     }
 
-    @GetMapping("Lesmin")
-    public int min(@RequestParam("a") int a, @RequestParam("b") int b) {
+    @GetMapping("Lesmin/{a}/{b}")
+    public int min(@PathVariable("a") int a, @PathVariable("b") int b) {
         return Lesson1MathUtil.min(a, b);
     }
 
-    @GetMapping("Lesmax")
-    public int max(@RequestParam("a") int a, @RequestParam("b") int b) {
+    @GetMapping("Lesmax/{a}/{b}")
+    public int max(@PathVariable("a") int a, @PathVariable("b") int b) {
         return Lesson1MathUtil.max(a, b);
     }
 
-    @GetMapping("LesisEven")
-    public boolean isEven(@RequestParam("a") int a) {
+    @GetMapping("LesisEven/{a}")
+    public boolean isEven(@PathVariable("a") int a) {
         return Lesson1MathUtil.isEven(a);
     }
 
-    @GetMapping("Lesmin3")
-    public int min3(@RequestParam("a") int a, @RequestParam("b") int b, @RequestParam("b") int c) {
+    @GetMapping("Lesmin3/{a}/{b}/{c}")
+    public int min3(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("b") int c) {
         return Lesson1MathUtil.min3(a,b,c);
     }
 
