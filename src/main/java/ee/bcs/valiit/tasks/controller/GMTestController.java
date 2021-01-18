@@ -15,22 +15,22 @@ public class GMTestController {
         return "Hello World";
     }
 
-    @GetMapping("Lesson1")
+    @GetMapping("Lesmin")
     public int min(@RequestParam("a") int a, @RequestParam("b") int b) {
         return Lesson1MathUtil.min(a, b);
     }
 
-    @GetMapping("Lesson1")
+    @GetMapping("Lesmax")
     public int max(@RequestParam("a") int a, @RequestParam("b") int b) {
         return Lesson1MathUtil.max(a, b);
     }
 
-    @GetMapping("Lesson1")
+    @GetMapping("LesisEven")
     public boolean isEven(@RequestParam("a") int a) {
         return Lesson1MathUtil.isEven(a);
     }
 
-    @GetMapping("Lesson1")
+    @GetMapping("Lesmin3")
     public int min3(@RequestParam("a") int a, @RequestParam("b") int b, @RequestParam("b") int c) {
         return Lesson1MathUtil.min3(a,b,c);
     }
