@@ -4,23 +4,23 @@ import java.util.*;
 
 public class Lesson3 {
     public static void main(String[] args) {
-        System.out.println("Les 3.1");
-        //int[] x = {1, 2, 3, 4, 5};
+        //System.out.println("Les 3.1");
+        //int[] x = {1, 2, 3};
         //System.out.println(sum(x));
-        System.out.println("\nLes 3.2");
-        //System.out.println(factorial(6));
-        System.out.println("\nLes 3.3");
-        //int[] a = {4, 100, 29, 3, 6, 9, 77};
-        //System.out.println(Arrays.toString(sort(a)));
-        System.out.println("\nLes 3.3Reino");
-        int[] b = {4, 100, 29, 3, 6, 9, 77};
-        System.out.println(sortReino(b));
-        System.out.println("\nLes 3.4");
-        System.out.println(reverseString("mina olin siin"));
-        System.out.println("\nLes 3.5");
-        System.out.println(isPrime(17));
-        System.out.println(isPrime(25));
-        System.out.println(isPrime(1));
+        //System.out.println("\nLes 3.2");
+        //System.out.println(factorial(8));
+        //System.out.println("\nLes 3.3");
+        int[] a = {6, 2, 3};
+        System.out.println(Arrays.toString(sort(a)));
+        //System.out.println("\nLes 3.3Reino");
+        //int[] b = {4, 100, 29, 3, 6, 9, 77};
+        //System.out.println(sortReino(b));
+        //System.out.println("\nLes 3.4");
+        //System.out.println(reverseString("mina olin siin"));
+        //System.out.println("\nLes 3.5");
+        //System.out.println(isPrime(17));
+        //System.out.println(isPrime(25));
+        //System.out.println(isPrime(1));
 
         /*
         int c = 4;
@@ -34,7 +34,7 @@ public class Lesson3 {
         // Todo liida kokku kõik numbrid massivis x
         int sum = 0;
         for (int i = 0; i < x.length; i++)
-            sum = ++x[i];
+            sum +=x[i];
         return sum;
     }
 

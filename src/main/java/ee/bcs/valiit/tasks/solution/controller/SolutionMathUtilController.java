@@ -18,4 +18,6 @@ public class SolutionMathUtilController {
     public int max(@PathVariable("a") int aVariable, @PathVariable("b") int bVariable){
         return SolutionLesson1MathUtil.max(aVariable, bVariable);
     }
+
+
 }
