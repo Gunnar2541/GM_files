@@ -14,7 +14,7 @@ public class Lesson1MathUtil {
         System.out.println(abs(-18));
         System.out.println(isEven(5));
         System.out.println(isEven(4));
-        System.out.println(min(3,3, 6));
+        System.out.println(min3(3,3, 6));
         System.out.println(max(4,4,8));
 
     }
@@ -53,7 +53,7 @@ public class Lesson1MathUtil {
     }
 
     // TODO tagasta kolmest arvust kõige väiksem
-    public static int min(int a, int b, int c) {
+    public static int min3(int a, int b, int c) {
         if (b<=c&&b<=a)
             return b;
         if (a<=c&&a<=b)
