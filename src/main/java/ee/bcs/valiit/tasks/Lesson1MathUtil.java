@@ -15,7 +15,7 @@ public class Lesson1MathUtil {
         System.out.println(isEven(5));
         System.out.println(isEven(4));
         System.out.println(min3(3,3, 6));
-        System.out.println(max(4,4,8));
+        System.out.println(max33(5,8,22));
 
     }
 
@@ -35,7 +35,7 @@ public class Lesson1MathUtil {
             return b;
     }
 
-    // TODO tagasta a absoluut arv
+    // TODO tagasta a absoluut arv ok
     public static int abs(int a) {
         if(a>=0)
             return a;
@@ -43,7 +43,7 @@ public class Lesson1MathUtil {
             return (a*-1);
     }
 
-    // TODO tagasta true, kui a on paaris arv
+    // TODO tagasta true, kui a on paaris arv ok
     // tagasta false kui a on paaritu arv
     public static boolean isEven(int a) {
         if(a%2==0)
@@ -52,7 +52,7 @@ public class Lesson1MathUtil {
             return false;
     }
 
-    // TODO tagasta kolmest arvust kõige väiksem
+    // TODO tagasta kolmest arvust kõige väiksem ok
     public static int min3(int a, int b, int c) {
         if (b<=c&&b<=a)
             return b;
@@ -63,7 +63,7 @@ public class Lesson1MathUtil {
     }
 
     // TODO tagasta kolmest arvust kõige suurem
-    public static int max(int a, int b, int c) {
+    public static int max33(int a, int b, int c) {
         if (b>=c&&b>=a)
             return b;
         if (a>=c&&a>=b)

@@ -35,16 +35,16 @@ public class Lesson4 {
             //System.out.println(Arrays.toString(line.split(" ")));
             //if (line.equalsIgnoreCase("exit")){
             //    break;
-            if (input[0].equals("quit")) {
+            if (input[0].equalsIgnoreCase("quit")) {
                 break;
 
 //createAccount with 0 balance
-            } else if (input[0].equals(createAccount)) {
+            } else if (input[0].equalsIgnoreCase(createAccount)) {
                 accountBalanceMap.put(input[1], BigDecimal.valueOf(0));
                 System.out.println("Account number has been set to: " + input[1]);
             }
 // getBalance has to display account balance of specific account
-            else if (input[0].equals(getBalance)) {
+            else if (input[0].equalsIgnoreCase(getBalance)) {
                 try {
                     if (accountBalanceMap.get(input[1]).equals(0)) {
                     }else
@@ -53,7 +53,7 @@ public class Lesson4 {
                     System.out.println("Account number does not exist");
                 }
 // depositMoney has to add specified amount of money to account and check that amount is positive number
-            }else if (input[0].equals(depositMoney)) {
+            }else if (input[0].equalsIgnoreCase(depositMoney)) {
                 bd = new BigDecimal(input[2]);
                 try {
                     if (accountBalanceMap.get(input[1]).equals(0)) {
@@ -64,7 +64,7 @@ public class Lesson4 {
                         accountBalanceMap.replace(input[1], accountBalance);
                         System.out.println("New balance for this account is: " + accountBalanceMap.get(input[1]));
                     } else {
-                        System.out.println("Check your amount input");
+                        System.out.println("Check your amount input, cant add negative amount");
                     }
                 } catch (Exception e) {
                     System.out.println("Account number does not exist");
@@ -72,7 +72,7 @@ public class Lesson4 {
             }
 //withdrawMoney, has to remove specified amount of money from account
 //check that amount is positive number, transaction not good if account balance would become negative
-            else if (input[0].equals(withdrawMoney)) {
+            else if (input[0].equalsIgnoreCase(withdrawMoney)) {
                 bd = new BigDecimal(input[2]);
                 try {
                     if (accountBalanceMap.get(input[1]).equals(0)) {
@@ -96,13 +96,12 @@ public class Lesson4 {
             }
 //"transfer- has to remove specified amount from fromAccount and add it to toAccount
 // Your application needs to check that toAccount is positive, check that account has enough money to do that transaction
-            else if (input[0].equals(transfer)) {
+            else if (input[0].equalsIgnoreCase(transfer)) {
                 bd = new BigDecimal(input[3]);
                 try {
                     if (accountBalanceMap.get(input[1]).equals(0)) {
                     } else if (accountBalanceMap.get(input[2]).equals(0)) {
                     }
-
                     if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
                         if ((accountBalanceMap.get(input[1]).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0) {
                             System.out.println("There is not enough cash in the account");

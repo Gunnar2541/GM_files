@@ -12,16 +12,24 @@ public class GMTestController {
     public String getHelloWorld() {
         return "Hello World";
     }
+
     //http://localhost:8080/solution/Lesmin/3/9
     @GetMapping("Lesmin/{a}/{b}")
     public int min(@PathVariable("a") int a, @PathVariable("b") int b) {
         return Lesson1MathUtil.min(a, b);
     }
+
     //http://localhost:8080/solution/Lesmax?a=3&b=9   ! ! ! Siin @RequestParam ! ! !
     @GetMapping("Lesmax")
     public int max(@RequestParam("a") int aVariable, @RequestParam("b") int bVariable) {
         return Lesson1MathUtil.max(aVariable, bVariable);
     }
+    //http://localhost:8080/solution/Lesabs/3 ok
+    @GetMapping("Lesabs/{a}")
+    public int min(@PathVariable("a") int a) {
+        return Lesson1MathUtil.abs(a);
+    }
+
     //http://localhost:8080/solution/LesisEven/8
     @GetMapping("LesisEven/{a}")
     public boolean isEven(@PathVariable("a") int a) {
@@ -31,6 +39,11 @@ public class GMTestController {
     @GetMapping("Lesmin3/{a}/{b}/{c}")
     public int min3(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("b") int c) {
         return Lesson1MathUtil.min3(a,b,c);
+    }
+    //http://localhost:8080/solution/Lesmax33/5/8/22
+    @GetMapping("Lesmax33/{a}/{b}/{c}")
+    public int max33(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("b") int c) {
+        return Lesson1MathUtil.max33(a,b,c);
     }
     //http://localhost:8080/solution/Lesexercise4/8
     @GetMapping("Lesexercise4/{a}")

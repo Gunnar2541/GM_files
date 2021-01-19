@@ -1,7 +1,4 @@
 package ee.bcs.valiit.tasks.controller;
-
-
-import ee.bcs.valiit.tasks.Lesson1MathUtil;
 import ee.bcs.valiit.tasks.Lesson3;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +12,6 @@ public class Les3Controller {
     public int sum(@RequestParam int[] x) {
         return Lesson3.sum(x);
     }
-
     //http://localhost:8080/solution/Lesfactorial?x=8 ok
     @GetMapping("Lesfactorial")
     public int factorial(@RequestParam int x) {
@@ -32,9 +28,6 @@ public class Les3Controller {
     public String reverseString(@RequestParam String a) {
         return Lesson3.reverseString(a);
     }
-    //public static String reverseString (String a)
-
-
     // http://localhost:8080/solution/LesisPrime/8 ok
     @GetMapping("LesisPrime/{z}")
     public boolean isPrime(@PathVariable("z") int z){
