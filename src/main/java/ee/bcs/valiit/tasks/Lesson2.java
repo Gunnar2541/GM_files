@@ -3,6 +3,7 @@ package ee.bcs.valiit.tasks;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class Lesson2 {
     public static void main(String[] args) {
         System.out.println("Ex 1");
         int [] arrayItems = {1, 2, 3, 5, 6, 7};
-        System.out.println(exercise1(arrayItems));
+        System.out.println(Arrays.toString(exercise1(arrayItems)));
         //System.out.println("\nEx 2");
         //exercise2(5);
         //System.out.println("\nEx 3");
@@ -46,7 +47,7 @@ public class Lesson2 {
         for (int i = arrayItems.length; i > 0; i--) {
             nrsReversed[arrayItems.length - i]= arrayItems[i-1];
         }
-        //System.out.println("Array reversed: " + nrsReversed);
+        System.out.println("Array reversed: " + Arrays.stream(nrsReversed).toArray());
         return nrsReversed;
     }
 
