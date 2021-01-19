@@ -12,20 +12,28 @@ public class RandomController {
     Random random = new Random();
     int i = random.nextInt(100);
     int userGuessCount = 0;
-    int userGuessCountmax = 10;
+    int userGuessCountMax = 10;
 
-    //http://localhost:8080/solution/Random?x=50
+    //http://localhost:8080/solution/Random?userGuess=50
     @GetMapping("Random")
     public String randomGameWeb(@RequestParam int userGuess) {
+        String output="";
         userGuessCount++;
-        if  (userGuess == i)
-            return "You got it";
-        else if (userGuess>i)
-            return "Try smaller.";
-        else if (userGuess<i)
-            return "Try bigger.";
-        else if (userGuessCount==userGuessCountmax)
-            return "You are out of guesses! You lost";
+        if (userGuessCount==userGuessCountMax) {
+            output = "You are out of guesses! You lost! New game starts.";
+            userGuessCount = 0;
+            i = random.nextInt(100);
+        } else if (userGuess>i) {
+            output = "Try smaller. You have had " + userGuessCount + " guesses out of 10.";
+        } else if (userGuess<i) {
+            output = "Try bigger. You have had " + userGuessCount + " guesses out of 10.";
+        } else {//  (userGuess == i)
+            output = "You got it! You had " + userGuessCount + " guesses out of 10. New game starts.";
+            userGuessCount = 0;
+            i = random.nextInt(100);
+        }
 
+        return output;
     }
+
 }
