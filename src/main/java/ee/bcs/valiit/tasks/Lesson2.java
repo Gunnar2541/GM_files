@@ -47,7 +47,7 @@ public class Lesson2 {
         for (int i = arrayItems.length; i > 0; i--) {
             nrsReversed[arrayItems.length - i]= arrayItems[i-1];
         }
-        System.out.println("Array reversed: " + Arrays.stream(nrsReversed).toArray());
+        //System.out.println("Array reversed: " + Arrays.stream(nrsReversed).toArray());
         return nrsReversed;
     }
 
