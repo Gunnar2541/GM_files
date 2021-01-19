@@ -1,5 +1,4 @@
 package ee.bcs.valiit.tasks.controller;
-import ee.bcs.valiit.tasks.Lesson3Randomgame;
 import ee.bcs.valiit.tasks.solution.Lesson3Randomgame;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,11 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 public class RandomController {
 
-    //http://localhost:8080/solution/Lessum?x=1,2,3 ok
+    //http://localhost:8080/solution/Random?x=1
     @GetMapping("Random")
-    public int sum(@RequestParam int[] x) {
-        return Lesson3Randomgame.sum(x);
+    public String randomGameBegin(@RequestParam int x) {
+        return Lesson3Randomgame.randomGameBegin(x);
     }
-
 
 }
