@@ -10,8 +10,8 @@ public class Lesson3 {
         //System.out.println("\nLes 3.2");
         //System.out.println(factorial(8));
         //System.out.println("\nLes 3.3");
-        int[] a = {6, 2, 3};
-        System.out.println(Arrays.toString(sort(a)));
+        //int[] a = {6, 2, 3};
+        //System.out.println(Arrays.toString(sort(a)));
         //System.out.println("\nLes 3.3Reino");
         //int[] b = {4, 100, 29, 3, 6, 9, 77};
         //System.out.println(sortReino(b));

@@ -68,4 +68,5 @@ public class SolutionLesson3Hard {
         }
         return result;
     }
+
 }
