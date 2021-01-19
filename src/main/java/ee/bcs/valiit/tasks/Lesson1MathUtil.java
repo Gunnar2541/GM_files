@@ -15,7 +15,7 @@ public class Lesson1MathUtil {
         System.out.println(isEven(5));
         System.out.println(isEven(4));
         System.out.println(min3(3,3, 6));
-        System.out.println(max33(5,8,22));
+        System.out.println(maxer(5,8,22));
 
     }
 
@@ -63,7 +63,7 @@ public class Lesson1MathUtil {
     }
 
     // TODO tagasta kolmest arvust kõige suurem
-    public static int max33(int a, int b, int c) {
+    public static int maxer(int a, int b, int c) {
         if (b>=c&&b>=a)
             return b;
         if (a>=c&&a>=b)
