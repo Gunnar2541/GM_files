@@ -6,6 +6,7 @@ import ee.bcs.valiit.tasks.Lesson3;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("solution")
 @RestController
@@ -48,10 +49,21 @@ public class GMTestController {
     public int maxer(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("c") int c) {
         return Lesson1MathUtil.maxer(a,b,c);
     }
-    //http://localhost:8080/solution/exercise1?arr=1,2,3,4,5,6
+    //http://localhost:8080/solution/exercise1?arr=1,2,3,4,5,6 OK
     @GetMapping("exercise1")
     public int [] exercise1(@RequestParam int [] arr) {
         return Lesson2.exercise1(arr);
+    }
+    //http://localhost:8080/solution/exercise2?a=5 OK
+    @GetMapping("exercise2")
+    public List<Integer> exercise2(@RequestParam("a") int aVariable) {
+        return Lesson2.exercise2(aVariable);
+    }
+
+    //http://localhost:8080/solution/exercise33/3/3 ! ! ! VALE TULEMUS, kuna proge alla vajab ümber tegemist
+    @GetMapping("exercise33/{a}/{b}")
+    public int [] exercise33(@PathVariable("a") int a, @PathVariable("b") int b) {
+        return Lesson2.exercise33(a, b);
     }
 
     //http://localhost:8080/solution/Lesexercise4/8

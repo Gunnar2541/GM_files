@@ -11,10 +11,12 @@ public class Lesson2 {
 
     public static void main(String[] args) {
         //System.out.println("Ex 1");
-        int [] arrayItems = {1, 2, 3, 5, 6, 7};
-        System.out.println(Arrays.toString(exercise1(arrayItems)));
+        //int [] arrayItems = {1, 2, 3, 5, 6, 7};
+        //System.out.println(Arrays.toString(exercise1(arrayItems)));
         //System.out.println("\nEx 2");
         //exercise2(5);
+        System.out.println(exercise2(5));
+        System.out.println(Arrays.toString(exercise33(3,3)));
         //System.out.println("\nEx 3");
         //exercise3(3,3);
         //System.out.println("\nEx 4");
@@ -55,10 +57,13 @@ public class Lesson2 {
     // Näide:
     // Sisend 5
     // Väljund 2 4 6 8 10
-    public static void exercise2(int x) {
+    public static List<Integer> exercise2(int x) {
+        List<Integer> result=new ArrayList<>();
         for (int i = 1; i <= x; i++) {
-            System.out.println(i * 2);
+            result.add(i*2);
         }
+        return result;
+            //System.out.println(i * 2);
     }
     // TODO trüki välja korrutustabel mis on x ühikut lai ja y ühikut kõrge
     // TODO näiteks x = 3 y = 3
@@ -79,10 +84,25 @@ public class Lesson2 {
         for (int i = 1; i <= x; i++) {
             for (int j = 1; j <= y; j++) {
                 //intMatrix[i][j] = (i + 1) * (j + 1);
-                System.out.print(i*j + " ");
+                //System.out.print(i*j + " ");
             }
             System.out.println();
         }
+    }
+
+    public static int [] exercise33(int x, int y) {
+        //int[][] intMatrix = new int[x][y];
+        //System.out.println("Array elements are: ");
+        int [] result = new int[x*y];
+        for (int i = 1; i <= x; i++) {
+            for (int j = 1; j <= y; j++) {
+                //intMatrix[i][j] = (i + 1) * (j + 1);
+                //System.out.print(i*j + " ");
+                result[(i*j)-1]=(i*j);
+            }
+
+        }
+        return result;
     }
        // TODO
     // Fibonacci jada on fib(n) = fib(n-1) + fib(n-2);
