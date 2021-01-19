@@ -49,6 +49,7 @@ public class GMTestController {
         return Lesson1MathUtil.maxer(a,b,c);
     }
     //http://localhost:8080/solution/exercise1?arr=1,2,3,4,5,6
+    @GetMapping("exercise1")
     public int [] exercise1(@RequestParam int [] arr) {
         return Lesson2.exercise1(arr);
     }

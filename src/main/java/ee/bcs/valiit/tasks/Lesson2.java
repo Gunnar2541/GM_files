@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Lesson2 {
 
     public static void main(String[] args) {
-        System.out.println("Ex 1");
+        //System.out.println("Ex 1");
         int [] arrayItems = {1, 2, 3, 5, 6, 7};
         System.out.println(Arrays.toString(exercise1(arrayItems)));
         //System.out.println("\nEx 2");
