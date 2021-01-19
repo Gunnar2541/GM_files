@@ -2,7 +2,10 @@ package ee.bcs.valiit.tasks.controller;
 
 import ee.bcs.valiit.tasks.Lesson1MathUtil;
 import ee.bcs.valiit.tasks.Lesson2;
+import ee.bcs.valiit.tasks.Lesson3;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RequestMapping("solution")
 @RestController
@@ -37,14 +40,23 @@ public class GMTestController {
     }
     //http://localhost:8080/solution/Lesmin3/5/8/22
     @GetMapping("Lesmin3/{a}/{b}/{c}")
-    public int min3(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("b") int c) {
+    public int min3(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("c") int c) {
         return Lesson1MathUtil.min3(a,b,c);
     }
-    //http://localhost:8080/solution/Lesmax33/5/8/22
-    @GetMapping("Lesmax33/{a}/{b}/{c}")
-    public int max33(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("b") int c) {
-        return Lesson1MathUtil.max33(a,b,c);
+    //http://localhost:8080/solution/Lesmaxer/33/10/55 ok
+    @GetMapping("Lesmaxer/{a}/{b}/{c}")
+    public int maxer(@PathVariable("a") int a, @PathVariable("b") int b, @PathVariable("c") int c) {
+        return Lesson1MathUtil.maxer(a,b,c);
     }
+    //http://localhost:8080/solution/exercise1?arr=1,2,3,4,5,6
+    public int [] exercise1(@RequestParam int [] arr) {
+        return Lesson2.exercise1(arr);
+    }
+    //public int [] sort(@RequestParam int[] a) {
+        //return Lesson3.sort(a);
+    //}
+    //static ArrayList<Integer> exercise1(int [] arrayItems) {
+
     //http://localhost:8080/solution/Lesexercise4/8
     @GetMapping("Lesexercise4/{a}")
     public int exercise4(@PathVariable("a") int a) {

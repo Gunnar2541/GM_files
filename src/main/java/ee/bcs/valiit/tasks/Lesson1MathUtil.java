@@ -62,7 +62,7 @@ public class Lesson1MathUtil {
             return c;
     }
 
-    // TODO tagasta kolmest arvust kõige suurem
+    // TODO tagasta kolmest arvust kõige suurem OK
     public static int maxer(int a, int b, int c) {
         if (b>=c&&b>=a)
             return b;

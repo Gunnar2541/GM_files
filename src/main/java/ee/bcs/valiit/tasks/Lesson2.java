@@ -1,49 +1,53 @@
 package ee.bcs.valiit.tasks;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Lesson2 {
 
     public static void main(String[] args) {
         System.out.println("Ex 1");
-        //exercise1(10);
-        System.out.println("\nEx 2");
-        exercise2(5);
-        System.out.println("\nEx 3");
-        exercise3(3,3);
-        System.out.println("\nEx 4");
-        System.out.println(exercise4(6));
-        System.out.println("\nEx 5");
-        System.out.println(exercise5(27));
-        System.out.println("\nEx 6");
-        System.out.println(exercise6(20, 30));
-        System.out.println("\nCodew 8");
-        System.out.println(codewars8());
-        System.out.println("\nCodew 7");
-        codewarsKata7();
+        int [] arrayItems = {1, 2, 3, 5, 6, 7};
+        exercise1(arrayItems);
+        //System.out.println("\nEx 2");
+        //exercise2(5);
+        //System.out.println("\nEx 3");
+        //exercise3(3,3);
+        //System.out.println("\nEx 4");
+        //System.out.println(exercise4(6));
+        //System.out.println("\nEx 5");
+        //System.out.println(exercise5(27));
+        //System.out.println("\nEx 6");
+        //System.out.println(exercise6(20, 30));
+        //System.out.println("\nCodew 8");
+        //System.out.println(codewars8());
+        //System.out.println("\nCodew 7");
+        //codewarsKata7();
 
     }
 
     // TODO loo 10 elemendile täisarvude massiv
     // TODO loe sisse konsoolist 10 täisarvu
     // TODO trüki arvud välja vastupidises järiekorras
-    public static void exercise1(int arrayItems) {
-        Scanner userNumber = new Scanner(System.in);
-        ArrayList<String> nrs = new ArrayList<>();
-        for (int u = 0; u < arrayItems; u++) {
-            System.out.print("Enter " + arrayItems + " numbers, one number at a time. You have entered " + u + " numbers so far: ");
-            String userNumberIn = userNumber.next();
-            nrs.add(u, userNumberIn);
-        }
-        System.out.println("Array as entered: " + nrs);
+    public static int [] exercise1(int [] arrayItems) {
+        //Scanner userNumber = new Scanner(System.in);
+        //ArrayList<String> nrs = new ArrayList<>();
+        //for (int u = 0; u < arrayItems.length; u++) {
+            //System.out.print("Enter " + arrayItems + " numbers, one number at a time. You have entered " + u + " numbers so far: ");
+            //String userNumberIn = userNumber.next();
+            //nrs.add(u, userNumberIn);
+        //}
+        //System.out.println("Array as entered: " + nrs);
 
-        ArrayList<String> nrsReversed = new ArrayList<>();
-        for (int i = arrayItems - 1; i >= 0; i--) {
-            nrsReversed.add(nrs.get(i));
+        int [] nrsReversed = new int[arrayItems.length];
+        for (int i = arrayItems.length; i > 0; i--) {
+            nrsReversed[arrayItems.length - i]= arrayItems[i-1];
         }
         System.out.println("Array reversed: " + nrsReversed);
+        return nrsReversed;
     }
 
     // TODO prindi välja x esimest paaris arvu
