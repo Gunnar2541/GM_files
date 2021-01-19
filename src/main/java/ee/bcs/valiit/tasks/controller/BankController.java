@@ -62,7 +62,7 @@ public class BankController {
                accountBalanceMap.replace(accNr, accountBalance);
                return "New balance for account: " + accNr + " is: " + accountBalanceMap.get(accNr);
            }
-       } catch (Exception e) {
+       } catch (NullPointerException e) {
            output= "Account number does not exist";
        }return output;
     }
@@ -85,7 +85,7 @@ public class BankController {
                 accountBalanceMap.replace(accNrFrom, accountBalance);
                 return "New balance for account nr: " + accNrFrom + " is: " + accountBalanceMap.get(accNrFrom);
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             output= "Account numbers does not exist";
         }
         return output;
@@ -98,29 +98,23 @@ public class BankController {
     @GetMapping("transfer/{accNrFrom}/{accNrTo}/{amount}")
         public String transfer(@PathVariable String accNrFrom, @PathVariable String accNrTo, @PathVariable int amount ) {
         if (amount < 0)
-            return "There is not enough cash in the account";
+            return "The amount must be positive number";
         bd = new BigDecimal(amount);
         try {
-            if (accountBalanceMap.get(accNrFrom).equals(0)) {
-            } else if (accountBalanceMap.get(accNrTo).equals(0)) {
-                if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
-                    if ((accountBalanceMap.get(accNrFrom).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0) {
-                        output = "There is not enough cash in the account";
-                    } else if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
-                        //output = "Previous balance for transferring account was: " + accountBalanceMap.get(accNrFrom);
-                        accountBalance = accountBalanceMap.get(accNrFrom).subtract(bd);
-                        accountBalanceMap.replace(accNrFrom, accountBalance);
-                        //output = "New balance for this account is: " + accountBalanceMap.get(accNrFrom);
-                        //output = "Previous balance for receiving account was: " + accountBalanceMap.get(accNrTo);
-                        accountBalance = accountBalanceMap.get(accNrTo).add(bd);
-                        accountBalanceMap.replace(accNrTo, accountBalance);
-                        return  "New balance for " + accNrFrom + "  account is: " + accountBalanceMap.get(accNrFrom) +
-                                "New balance for " + accNrTo + "  account is: " + accountBalanceMap.get(accNrTo);
-                    } else {
-                        output = "Check your amount entry, must be positive nr";
-                    }
+            if (accountBalanceMap.get(accNrFrom).equals(BigDecimal.ZERO)) { // Ei ole õige lahendus!
+                return  "The "+accNrFrom+" is not existing";
+            } else if (accountBalanceMap.get(accNrTo).equals(BigDecimal.ZERO)) { // Ei ole õige lahendus!
+                return "The " + accNrTo + " is not existing";
+            } else if ((accountBalanceMap.get(accNrFrom).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0){
+                return  "There is not enough cash in the account";
+            } else {
+                accountBalance = accountBalanceMap.get(accNrFrom).subtract(bd);
+                accountBalanceMap.replace(accNrFrom, accountBalance);
+                accountBalance = accountBalanceMap.get(accNrTo).add(bd);
+                accountBalanceMap.replace(accNrTo, accountBalance);
+                return  "New balance for " + accNrFrom + "  account is: " + accountBalanceMap.get(accNrFrom) +
+                    "New balance for " + accNrTo + "  account is: " + accountBalanceMap.get(accNrTo);
                 }
-            }
         } catch (Exception e) {
             output = "One or both of the account numbers do not exist";
         }
