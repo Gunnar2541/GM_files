@@ -52,10 +52,6 @@ public class GMTestController {
     public int [] exercise1(@RequestParam int [] arr) {
         return Lesson2.exercise1(arr);
     }
-    //public int [] sort(@RequestParam int[] a) {
-        //return Lesson3.sort(a);
-    //}
-    //static ArrayList<Integer> exercise1(int [] arrayItems) {
 
     //http://localhost:8080/solution/Lesexercise4/8
     @GetMapping("Lesexercise4/{a}")
