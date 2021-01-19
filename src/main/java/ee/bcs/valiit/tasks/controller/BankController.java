@@ -1,0 +1,157 @@
+package ee.bcs.valiit.tasks.controller;
+import ee.bcs.valiit.tasks.Lesson2;
+import ee.bcs.valiit.tasks.Lesson3;
+import org.springframework.web.bind.annotation.*;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Scanner;
+
+@RequestMapping("bank/command")
+@RestController
+
+public class BankController {
+    // Store account nr as a key and account balance as value
+    static HashMap<String, BigDecimal> accountBalanceMap = new HashMap<>();
+
+        BigDecimal accountBalance = BigDecimal.valueOf(0);
+        BigDecimal bd = BigDecimal.valueOf(0);
+        String output = "";
+
+// http://localhost:8080/bank/command/quit
+    @GetMapping("quit")
+    public String quit(@PathVariable String z) {
+            output = "You cant really quit! Unless you close your browser!";
+        return output;
+    }
+//createAccount with 0 balance
+//http://localhost:8080/bank/command/createAccount/EE123
+//http://localhost:8080/bank/command/createAccount/EE456
+
+    @GetMapping("createAccount/{accNr}")
+    public String createAccount(@PathVariable String accNr ){
+            accountBalanceMap.put(accNr, BigDecimal.valueOf(0));
+            output = "Account number has been set to: " +accNr+ ", with amount of 0.00 .";
+        return output;
+    }
+//getBalance has to display account balance of specific account
+//http://localhost:8080/bank/command/getBalance/EE123
+//http://localhost:8080/bank/command/getBalance/EE456
+    @GetMapping("getBalance/{accNr}")
+    public String getBalance(@PathVariable String accNr ) {
+        try {
+            if (accountBalanceMap.get(accNr).equals(BigDecimal.valueOf(0))){
+            }else
+                output= "Account balance for acc " + accNr + " is " + accountBalanceMap.get(accNr);
+        } catch (NullPointerException e) {
+            output= "Account number does not exist";
+        }
+        return output;
+    }
+// depositMoney has to add specified amount of money to account and check that amount is positive number
+//http://localhost:8080/bank/command/depositMoney/EE123/500
+//http://localhost:8080/bank/command/depositMoney/EE456/100
+    @GetMapping("depositMoney/{accNr}/{amount}")
+    public String depositMoney(@PathVariable String accNr, @PathVariable int amount ){
+        bd = new BigDecimal(amount);
+        try {
+            if (accountBalanceMap.get(accNr).equals(BigDecimal.valueOf(0))) {
+            }
+            else if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
+                accountBalance = accountBalanceMap.get(accNr).add(bd);
+                accountBalanceMap.replace(accNr, accountBalance);
+                output= "New balance for account: "+accNr+" is: " + accountBalanceMap.get(accNr);
+            } else {
+                output = "Check your amount input, cant add negative amount";
+            }
+        } catch (Exception e) {
+            output = "Account number does not exist";
+        }
+        return output;
+    }
+//withdrawMoney, has to remove specified amount of money from account
+//check that amount is positive number, transaction not good if account balance would become negative
+//http://localhost:8080/bank/command/withdrawMoney/EE123/150
+//http://localhost:8080/bank/command/withdrawMoney/EE456/75
+    @GetMapping("withdrawMoney/{accNrFrom}/{accNrTo}/{amount}")
+    public String withdrawMoney(@PathVariable String accNrFrom, @PathVariable int amount ){
+        if (accountBalanceMap.get(accNrFrom).equals(BigDecimal.valueOf(0)))
+            output="Account number does not exist";
+        if (amount<=0)
+            output= "Check your amount entry, must be positive nr";
+        bd = new BigDecimal(amount);
+        if(bd.compareTo(BigDecimal.valueOf(0)) > 0) {
+            if((accountBalanceMap.get(accNrFrom).subtract(bd)).compareTo(BigDecimal.valueOf(0))<0){
+                output= "There is not enough cash in the account";
+            }else{
+                accountBalance = accountBalanceMap.get(accNrFrom).subtract(bd);
+                accountBalanceMap.replace(accNrFrom, accountBalance);
+                output= "New balance for account nr: "+accNrFrom+" is: " + accountBalanceMap.get(accNrFrom);
+            }
+        }else{
+            output= "Account number does not exist.";
+        }
+        return output;
+    }
+
+
+//"transfer- has to remove specified amount from fromAccount and add it to toAccount
+// Your application needs to check that toAccount is positive, check that account has enough money to do that transaction
+//http://localhost:8080/bank/command/transfer/EE123/EE456/250
+//http://localhost:8080/bank/command/transfer/EE123/EE456/750
+    @GetMapping("transfer/{accNrFrom}/{accNrTo}/{amount}")
+        public String transfer(@PathVariable String accNrFrom, @PathVariable String accNrTo, @PathVariable int amount ){
+        bd = new BigDecimal(amount);
+            try {
+                if (accountBalanceMap.get(accNrFrom).equals(0)) {
+                } else if (accountBalanceMap.get(accNrTo).equals(0)) {
+                    if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
+                        if ((accountBalanceMap.get(accNrFrom).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0) {
+                            output = "There is not enough cash in the account";
+                        } else if (bd.compareTo(BigDecimal.valueOf(0)) > 0) {
+                            output = "Previous balance for transferring account was: " + accountBalanceMap.get(accNrFrom);
+                            accountBalance = accountBalanceMap.get(accNrFrom).subtract(bd);
+                            accountBalanceMap.replace(accNrFrom, accountBalance);
+                            output = "New balance for this account is: " + accountBalanceMap.get(accNrFrom);
+                            output = "Previous balance for receiving account was: " + accountBalanceMap.get(accNrTo);
+                            accountBalance = accountBalanceMap.get(accNrTo).add(bd);
+                            accountBalanceMap.replace(accNrTo, accountBalance);
+                            output = "New balance for this account is: " + accountBalanceMap.get(accNrTo);
+                        } else {
+                            output = "Check your amount entry, must be positive nr";
+                        }
+                    }
+                }
+            }catch (Exception e) {
+                output="One or both of the account numbers do not exist";
+            }
+        return output;
+    }
+}
+/*
+        System.out.println("To create account, type: \""+createAccount+"\" and account nr in format \""+accountNr+"\" (space separated, no quotes!).");
+        System.out.println("To get acc balance, type: \""+getBalance+"\" and account nr in format \""+accountNr+"\" (space separated, no quotes!).");
+        System.out.println("To deposit money, type: \""+depositMoney+"\", account in format \""+accountNr+"\" and amount in format \"1234\" (space separated, no quotes!).");
+        System.out.println("To withdraw money, type: \""+withdrawMoney+"\", from account in format \""+accountNr+"\" and amount in format \"1234\" (space separated, no quotes!).");
+        System.out.println("To transfer money, type: \""+transfer+"\", from which acc\""+accountNr+"\" , to which acc\""+accountNr+"\" and what amount \"1234\" (space separated, no quotes!).");
+        System.out.println("Type \"quit\" to exit");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Type your request here: ");
+            String line = scanner.nextLine();
+            String[] input = line.split(" "); //võiks kasutada - line.startsWith()
+            //System.out.println(Arrays.toString(line.split(" ")));
+            //if (line.equalsIgnoreCase("exit")){
+            //    break;
+            if (input[0].equalsIgnoreCase("quit")) {
+                break;
+
+
+        String accountNr = "EE123";
+        String createAccount = "createAccount";
+        String getBalance = "getBalance";
+        String depositMoney = "depositMoney";
+        String withdrawMoney = "withdrawMoney";
+        String transfer = "transfer";
+        BigDecimal amount = BigDecimal.valueOf(0);
+ */
+

@@ -1,5 +1,4 @@
 package ee.bcs.valiit.tasks.controller;
-import ee.bcs.valiit.tasks.solution.Lesson3Randomgame;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
