@@ -1,10 +1,8 @@
 package ee.bcs.valiit.tasks.controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Scanner;
+
 
 @RequestMapping("bank/command")
 @RestController
@@ -16,6 +14,8 @@ public class BankController {
         BigDecimal accountBalance = BigDecimal.valueOf(0);
         BigDecimal bd = BigDecimal.valueOf(0);
         String output = "";
+        BigDecimal temp= BigDecimal.valueOf(0);
+
 
 // http://localhost:8080/bank/command/quit
     @GetMapping("quit")
@@ -101,10 +101,9 @@ public class BankController {
             return "The amount must be positive number";
         bd = new BigDecimal(amount);
         try {
-            if (accountBalanceMap.get(accNrFrom).equals(BigDecimal.ZERO)) { // Ei ole õige lahendus!
-                return  "The "+accNrFrom+" is not existing";
-            } else if (accountBalanceMap.get(accNrTo).equals(BigDecimal.ZERO)) { // Ei ole õige lahendus!
-                return "The " + accNrTo + " is not existing";
+            if ((BigDecimal.valueOf(0).compareTo(accountBalanceMap.get(accNrFrom))<=0)||   // Ei ole õige lahendus!
+                    (BigDecimal.valueOf(0).compareTo(accountBalanceMap.get(accNrTo)))<=0){
+                return "account nr does not exist";
             } else if ((accountBalanceMap.get(accNrFrom).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0){
                 return  "There is not enough cash in the account";
             } else {
@@ -115,7 +114,7 @@ public class BankController {
                 return  "New balance for " + accNrFrom + "  account is: " + accountBalanceMap.get(accNrFrom) +
                     "New balance for " + accNrTo + "  account is: " + accountBalanceMap.get(accNrTo);
                 }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             output = "One or both of the account numbers do not exist";
         }
         return output;
