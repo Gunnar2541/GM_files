@@ -1,3 +1,5 @@
+/*
+
 package ee.bcs.valiit.tasks.controller;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
@@ -7,7 +9,7 @@ import java.util.HashMap;
 @RequestMapping("bank/command")
 @RestController
 
-public class BankController {
+public class BankControllerMisSeeOn {
     // Store account nr as a key and account balance as value
     static HashMap<String, BigDecimal> accountBalanceMap = new HashMap<>();
 
@@ -116,3 +118,6 @@ public class BankController {
         return output;
     }
  }
+
+
+ */
