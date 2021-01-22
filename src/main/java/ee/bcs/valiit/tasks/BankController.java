@@ -17,17 +17,19 @@ public class BankController {
     HashMap<String, BigDecimal> accountMap = new HashMap<>();
 
 
-    BigDecimal accountBalance = BigDecimal.valueOf(0);
-    BigDecimal bd = BigDecimal.valueOf(0);
+    Integer accountBalance = 0;
+    //BigDecimal bd = BigDecimal.valueOf(0);
     String account_nr = "";
     BigDecimal amount;
+    String output = "";
+    Integer outputNr;
 
     // http://localhost:8080/bank/createAccount?customer_id=123&account_nr=EE222&cust_name=Toomas&account_balance=0
-    @PostMapping ("createAccount")
-    public String createAccount (@RequestParam String customer_id,
-                                 @RequestParam String account_nr,
-                                 @RequestParam String cust_name,
-                                 @RequestParam Integer account_balance) {
+    @PostMapping("createAccount")
+    public String createAccount(@RequestParam String customer_id,
+                                @RequestParam String account_nr,
+                                @RequestParam String cust_name,
+                                @RequestParam Integer account_balance) {
         accountMap.putIfAbsent(account_nr, BigDecimal.valueOf(0));
         String sql = "INSERT INTO bank_accounts (customer_id, account_nr, cust_name, account_balance) " +
                 "VALUES (:customer_id, :account_nr, :cust_name, :account_balance)";
@@ -37,18 +39,18 @@ public class BankController {
         paraMap.put("cust_name", cust_name);
         paraMap.put("account_balance", account_balance);
         jdbcTemplate.update(sql, paraMap);
-        return account_nr+ " for "+cust_name+" has been created.";
+        return account_nr + " for " + cust_name + " has been created.";
     }
 
-    // http://localhost:8080/bank/accountBalance?account_nr=EE222
+    // http://localhost:8080/bank/accountBalance?account_nr=EE999
     @GetMapping("accountBalance")
-    public BigDecimal accountBalance(@RequestParam String account_nr) {
-        try {
-            if ((BigDecimal.valueOf(0).compareTo(accountMap.get(account_nr)) <= 0))
-                return accountMap.get(account_nr);
-        } catch (NullPointerException e) {
-
-        }return BigDecimal.ZERO;
+    public Integer accountBalance(@RequestParam String account_nr) {
+        String sql = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("accParam", account_nr);
+        System.out.println("Balance of the account is: ");
+        return jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+        //annab vastuseks account_balance
     }
 
     // http://localhost:8080/bank/depositMoney?account_nr=EE222&amount=500
@@ -56,64 +58,99 @@ public class BankController {
     public String depositMoney(@RequestParam String account_nr, @RequestParam Integer amount) {
         if (amount < 0)
             return "Check your amount input, cant add negative amount";
-        bd = new BigDecimal(amount);
-        //try {
-            //if ((BigDecimal.valueOf(0).compareTo(accountMap.get(account_nr)) <= 0)) {
-                accountBalance = accountMap.get(account_nr).add(bd);
-                Integer account_balance = accountBalance.intValue();
+        else {
+            String sql = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
+            Map<String, Object> paraMap = new HashMap<>();
+            paraMap.put("accParam", account_nr);
+            Integer oldAccBalance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
 
-                accountMap.replace(account_nr, accountBalance);
-                String sql = "UPDATE bank_accounts SET account_balance = account_balance WHERE account_nr = account_nr";
-                Map<String, Object> paraMap = new HashMap<>();
-                paraMap.put("account_balance", account_balance);
-                jdbcTemplate.update(sql, paraMap);
-                return "New balance for account: " + account_nr + " is: " + accountMap.get(account_nr);
-            //}
-        //} catch (NullPointerException e) {
-            //return "Account number does not exist-error";
-       // }//return "Account number does not exist";
-    }
-    // http://localhost:8080/bank/withdrawMoney?accountNr=EE123&amount=12
-        @PutMapping("withdrawMoney")
-        public void withdrawMoney(@RequestParam String accounNr, @RequestParam int amount) {
-            if (amount <= 0)
-                System.out.println("Check your amount entry, must be positive nr");
-            try {
-                if ((BigDecimal.valueOf(0).compareTo(accountMap.get(account_nr))<=0)){
-                    bd = new BigDecimal(amount);
-                    if ((accountMap.get(account_nr).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0) {
-                        System.out.println("There is not enough cash in the account");
-                    } else {
-                        accountBalance = accountMap.get(account_nr).subtract(bd);
-                        accountMap.replace(account_nr, accountBalance);
-                        System.out.println("New balance for account nr: " + account_nr + " is: " + accountMap.get(account_nr));
-                    }}
-            } catch (NullPointerException e) {
-                System.out.println("Account numbers does not exist");
-            }
-            //return output;
+            Integer newAccBalance = oldAccBalance + amount;
+            String sql2 = "UPDATE bank_accounts SET account_balance = :newAccBalanceKey WHERE account_nr = :accParam";
+            Map<String, Object> paraMap2 = new HashMap<>();
+            paraMap2.put("newAccBalanceKey", newAccBalance);
+            paraMap2.put("accParam", account_nr);
+            jdbcTemplate.update(sql2, paraMap2);
+            output = newAccBalance.toString();
         }
-    // http://localhost:8080/bank/transferMoney?fromAccount=EE123&toAccount=EE124&amount=12
-            public void transferMoney(@PathVariable String fromAccount, @PathVariable String toAccount, @PathVariable int amount ) {
-                if (amount < 0)
-                    System.out.println("The amount must be positive number");
-                bd = new BigDecimal(amount);
+        return"New account balance for "+account_nr+ " is " +output;
+    }
+
+    // http://localhost:8080/bank/withdrawMoney?account_nr=EE999&amount=250
+        @PutMapping("withdrawMoney")
+        public String withdrawMoney(@RequestParam String account_nr, @RequestParam int amount) {
+            if (amount <= 0)
+                return "Check your amount input, cant add negative amount";
+            else {
+                String sql = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
+                Map<String, Object> paraMap = new HashMap<>();
+                paraMap.put("accParam", account_nr);
+                Integer oldAccBalance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
                 try {
-                    if ((BigDecimal.valueOf(0).compareTo(accountMap.get(fromAccount))<=0)&&
-                            (BigDecimal.valueOf(0).compareTo(accountMap.get(toAccount)))<=0){
-                        if ((accountMap.get(fromAccount).subtract(bd)).compareTo(BigDecimal.valueOf(0)) < 0)
-                            System.out.println("There is not enough cash in the account");
-                        else{
-                            accountBalance = accountMap.get(fromAccount).subtract(bd);
-                            accountMap.replace(fromAccount, accountBalance);
-                            accountBalance = accountMap.get(toAccount).add(bd);
-                            accountMap.replace(toAccount, accountBalance);
-                            System.out.println( "New balance for " + fromAccount + "  account is: " + accountMap.get(fromAccount)+". " +
-                                "New balance for " + toAccount + "  account is: " + accountMap.get(toAccount));
-                        }}
+                    if ((oldAccBalance - amount) < 0) {
+                        return "There is not enough cash in the account";
+                    } else {
+                        Integer newAccBalance = oldAccBalance - amount;
+                        String sql2 = "UPDATE bank_accounts SET account_balance = :newAccBalanceKey WHERE account_nr = :accParamKey";
+                        Map<String, Object> paraMap2 = new HashMap<>();
+                        paraMap2.put("newAccBalanceKey", newAccBalance);
+                        paraMap2.put("accParamKey", account_nr);
+                        jdbcTemplate.update(sql2, paraMap2);
+                        output = newAccBalance.toString();
+                        return "New balance for account nr: " + account_nr + " is: " + output;
+                    }
                 } catch (NullPointerException e) {
-                    System.out.println("One or both of the account numbers do not exist");
+                    return "There is not enough cash in the account (Error)";
                 }
-                //return output;
             }
-}
+    }
+
+    // http://localhost:8080/bank/transferMoney?fromAccount=EE444&toAccount=EE999&amount=125
+        public String transferMoney(@PathVariable String fromAccount, @PathVariable String toAccount, @PathVariable int amount ) {
+            Integer newAccBalance;
+            Integer newAccBalance2;
+            if (amount <= 0)
+                return "Check your amount input, cant add negative amount";
+            else {
+                String sql = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
+                Map<String, Object> paraMap = new HashMap<>();
+                paraMap.put("accParam", fromAccount);
+                Integer oldAccBalance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+                try {
+                    if ((oldAccBalance - amount) < 0) {
+                        return "There is not enough cash in the transferer account";
+                    } else {
+                        newAccBalance = oldAccBalance - amount;
+                        String sql2 = "UPDATE bank_accounts SET account_balance = :newAccBalanceKey WHERE account_nr = :accParamKey";
+                        Map<String, Object> paraMap2 = new HashMap<>();
+                        paraMap2.put("newAccBalanceKey", newAccBalance);
+                        paraMap2.put("accParamKey", fromAccount);
+                        jdbcTemplate.update(sql2, paraMap2);
+                        output = newAccBalance.toString();
+                        //return "New balance for transferer account nr: " + account_nr + " is: " + output;
+                    }
+                } catch (NullPointerException e) {
+                    return "There is not enough cash in the account or account not existing (Error)";
+                }
+                String sql3 = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
+                Map<String, Object> paraMap3 = new HashMap<>();
+                paraMap3.put("accParam", toAccount);
+                Integer oldAccBalance2 = jdbcTemplate.queryForObject(sql3, paraMap3, Integer.class);
+                try {
+                    newAccBalance2 = oldAccBalance2 + amount;
+                    String sql4 = "UPDATE bank_accounts SET account_balance = :newAccBalanceKey WHERE account_nr = :accParamKey";
+                    Map<String, Object> paraMap4 = new HashMap<>();
+                    paraMap4.put("newAccBalanceKey", newAccBalance2);
+                    paraMap4.put("accParamKey", toAccount);
+                    jdbcTemplate.update(sql4, paraMap4);
+                    output = newAccBalance2.toString();
+                    //return "New balance for account nr: " + toAccount + " is: " + output;
+                } catch (NullPointerException e) {
+                    return "Receiving account not existing (Error)";
+                }
+            }
+            return "The balance after transactions is: \n " +
+                    "for the account: " + fromAccount + ", the balance is: " + newAccBalance+
+                    "\nfor the account: " + toAccount + ", the balance is: " + newAccBalance2;
+        }
+    }
+
