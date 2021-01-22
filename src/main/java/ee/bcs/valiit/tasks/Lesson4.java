@@ -9,6 +9,7 @@ public class Lesson4 {
     // Store account nr as a key and account balance as value
     static HashMap<String, BigDecimal> accountBalanceMap = new HashMap<>();
 
+
     public static void main(String[] args) {
         String accountNr = "EE123";
         String createAccount = "createAccount";
