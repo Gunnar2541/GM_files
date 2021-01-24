@@ -1,4 +1,8 @@
+/* AMETLIK VERSIOON
+
+
 package ee.bcs.valiit.tasks;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,13 +19,13 @@ public class BankController {
     public BankCustomerData bankCustomer(
                 @RequestParam("cust_name") String custName,
                 @RequestParam("customer_id") String custId,
-                @RequestParam("account_nr") String custAcc,
+                @RequestParam("custAccNr") String custAccNr,
                 @RequestParam("transAmt") int transAmt,
                 @RequestParam("account_balance") int custAccBalance) {
             BankCustomerData bankCustomer = new BankCustomerData();
             bankCustomer.setCustName(custName);
             bankCustomer.setCustId(custId);
-            bankCustomer.setCustAcc(custAcc);
+            bankCustomer.setCustAccNr(custAccNr);
             bankCustomer.setCustAccBalance(custAccBalance);
             bankCustomer.setTransAmount(transAmt);
             return bankCustomer;
@@ -118,6 +122,7 @@ public class BankController {
         "custAcc":"EE888",
         "transAmount":100
     } */
+/*
         @PutMapping("mahaMoneyB")
         public String mahaMoneyB(@RequestBody BankCustomerData bankCustomer) {
         if (bankCustomer.getTransAmount() <= 0)
@@ -125,7 +130,7 @@ public class BankController {
         else {
             String sql = "SELECT account_balance FROM bank_accounts WHERE account_nr = :accParam";
             Map<String, Object> paraMap = new HashMap<>();
-            paraMap.put("accParam", bankCustomer.getCustAcc());
+            paraMap.put("accParam", bankCustomer.getCustAccNr());
             Integer oldAccBalance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
             try {
                 if ((oldAccBalance - bankCustomer.getTransAmount()) < 0) {
@@ -135,9 +140,9 @@ public class BankController {
                     String sql2 = "UPDATE bank_accounts SET account_balance = :newAccBalanceKey WHERE account_nr = :accParamKey";
                     Map<String, Object> paraMap2 = new HashMap<>();
                     paraMap2.put("newAccBalanceKey", newAccBalance);
-                    paraMap2.put("accParamKey", bankCustomer.getCustAcc());
+                    paraMap2.put("accParamKey", bankCustomer.getCustAccNr());
                     jdbcTemplate.update(sql2, paraMap2);
-                    return "New balance for account nr: " + bankCustomer.getCustAcc() + " is: " + newAccBalance;
+                    return "New balance for account nr: " + bankCustomer.getCustAccNr() + " is: " + newAccBalance;
                 }
             } catch (NullPointerException e) {
                 return "There is not enough cash in the account (Error)";
@@ -193,4 +198,4 @@ public class BankController {
             }
         }
     }
-
+ */

@@ -1,4 +1,5 @@
-/*
+/* TAGAVARA VERSIOON, EI TEA, KAS TÖÖTAB.
+
 package ee.bcs.valiit.tasks.controller;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;

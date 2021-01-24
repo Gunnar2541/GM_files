@@ -2,11 +2,39 @@ package ee.bcs.valiit.tasks;
 
 public class BankCustomerData {
 
-    private String custName;
     private String custId;
-    private String custAcc;
+    private String custName;
+    private String custAddress;
+    private String custAccNr;
+    private String custAccType;
     private int custAccBalance;
     private int transAmount;
+    private String transType;
+
+
+    public String getTransType() {
+        return transType;
+    }
+
+    public void setTransType(String transType) {
+        this.transType = transType;
+    }
+
+    public String getCustAddress() {
+        return custAddress;
+    }
+
+    public void setCustAddress(String custAddress) {
+        this.custAddress = custAddress;
+    }
+
+    public String getCustAccType() {
+        return custAccType;
+    }
+
+    public void setCustAccType(String custAccType) {
+        this.custAccType = custAccType;
+    }
 
     public void setCustAccBalance(int custAccBalance) {
         this.custAccBalance = custAccBalance;
@@ -19,7 +47,6 @@ public class BankCustomerData {
     public void setTransAmount(int transAmount) {
         this.transAmount = transAmount;
     }
-
 
     public String getCustName() {
         return custName;
@@ -37,12 +64,12 @@ public class BankCustomerData {
         this.custId = custId;
     }
 
-    public String getCustAcc() {
-        return custAcc;
+    public String getCustAccNr() {
+        return custAccNr;
     }
 
-    public void setCustAcc(String custAcc) {
-        this.custAcc = custAcc;
+    public void setCustAccNr(String custAccNr) {
+        this.custAccNr = custAccNr;
     }
 
     public Integer getCustAccBalance() {
@@ -52,6 +79,5 @@ public class BankCustomerData {
     public void setCustAccBalance(Integer custAccBalance) {
         this.custAccBalance = custAccBalance;
     }
-
 
 }
