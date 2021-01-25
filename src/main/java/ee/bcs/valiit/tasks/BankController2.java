@@ -2,10 +2,7 @@ package ee.bcs.valiit.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -20,9 +17,9 @@ public class BankController2 {
 
     HashMap<String, BigDecimal> accountMap = new HashMap<>();
 
-    // http://localhost:8080/bank2/createAccount?accountNr=EE123
-    @GetMapping("createAccount")
-    public void createAccount(@RequestParam("accountNr") String accountNr){
+    // http://localhost:8080/bank2/createAccounts?accountNr=EE123
+    @PostMapping("createAccounts")
+    public void createAccounts(@RequestParam("accountNr") String accountNr){
         String sql = "INSERT INTO account (account_number, balance) VALUES (:accountNumber, :balance)";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("accountNumber", accountNr);
@@ -41,8 +38,8 @@ public class BankController2 {
         // return accountMap.get(accountNr);
     }
 
-    // http://localhost:8080/bank2/depositMoney?accountNr=EE123&amount=12
-    @GetMapping("depositMoney")
+    // http://localhost:8080/bank2/depositMoney?accountNr=EE222&amount=100
+    @PutMapping("depositMoney")
     public void depositMoney(@RequestParam("accountNr") String accountNr, @RequestParam("amount") BigDecimal amount){
         // BigDecimal balance = accountMap.get(accountNr);
         String sql = "SELECT balance FROM account where account_number = :accountNumber";
@@ -60,7 +57,7 @@ public class BankController2 {
         jdbcTemplate.update(sql2, paramMap2);
     }
 
-    // http://localhost:8080/bank2/withdrawMoney?accountNr=EE123&amount=12
+    // http://localhost:8080/bank2/withdrawMoney?accountNr=EE222&amount=50
     @GetMapping("withdrawMoney")
     public void withdrawMoney(@RequestParam("accountNr") String accountNr, @RequestParam("amount") BigDecimal amount){
         //BigDecimal balance = accountMap.get(accountNr);
@@ -82,7 +79,7 @@ public class BankController2 {
         jdbcTemplate.update(sql2, paramMap2);
     }
 
-    // http://localhost:8080/bank2/transferMoney?fromAccount=EE123&toAccount=EE124&amount=12
+    // http://localhost:8080/bank2/transferMoney?fromAccount=EE222&toAccount=EE123&amount=50
     @GetMapping("transferMoney")
     public void transferMoney(@RequestParam("fromAccount") String fromAccount,
                               @RequestParam("toAccount") String toAccount,
