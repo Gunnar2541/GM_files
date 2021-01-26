@@ -4,22 +4,45 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="Siim">
-        <createTable tableName="author">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
+    <changeSet id="test1 26JAN" author="Gunnar">
+        <createTable tableName="bank_accounts">
+            <column name="customer_counter" type="int" autoIncrement="true"/>
+            <column name="customer_id" type="text">
+                <constraints primaryKey="true" unique="true"
+                             notNullConstraintName="true"/>
             </column>
-            <column name="name" type="text"/>
+            <column name="cust_name" type="text"/>
+            <column name="customer_address" type="text"/>
         </createTable>
 
-        <createTable tableName="book">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
+        <createTable tableName="customer_accounts">
+            <column name="account_cust_id" type="text">
+                <constraints foreignKeyName="fk_account_cust_id" references="bank_accounts(customer_id)"/>
             </column>
-            <column name="name" type="text"/>
-            <column name="author_id" type="int">
-                <constraints foreignKeyName="fk_book_author" references="author(id)"/>
+            <column name="account_number" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="account_type" type="text"/>
+            <column name="account_balance" type="int">
             </column>
         </createTable>
+
+        <createTable tableName="transaction_history">
+            <column name="transaction_id" type="int" autoIncrement="true">
+                <constraints unique="true"/>
+            </column>
+            <column name="transaction_account_from" type="text">
+                <constraints foreignKeyName="fk_account_from"
+                             references="customer_accounts(account_number)"/>
+            </column>
+            <column name="transaction_account_to" type="text">
+                <constraints foreignKeyName="fk_account_to"
+                             references="customer_accounts(account_number)"/>
+            </column>
+            <column name="transaction_type" type="text"/>
+            <column name="transaction_amount" type="int">
+            </column>
+        </createTable>
+
     </changeSet>
 </databaseChangeLog>

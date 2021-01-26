@@ -19,7 +19,7 @@ public class BankRepository {
     "custName":"Thomas Thol",
     "custAddress":"Talu 8"
      }   */
-//  http://localhost:8080/bank/createCustomerBody
+//  http://localhost:8080/bank/createCustomerB
     public void createCustomerBody(BankCustomerData bankCustomer) {
         String sql = "INSERT INTO bank_accounts (customer_id, customer_address, cust_name) " +
                 "VALUES (:cust_id, :customer_addressKey, :cust_nameKey)";
@@ -36,13 +36,13 @@ public class BankRepository {
     "custAccNr":"EE7777"
      }   */
     //  http://localhost:8080/bank/createCustomerAccount
-    public void createCustomerAccount(BankCustomerData bankCustomer) {
+    public void createCustomerAccount(BankCustomerData bankAccount) {
         String sql = "INSERT INTO customer_accounts (account_cust_id, account_type, account_number, account_balance) " +
                 "VALUES (:acc_cust_id, :acc_type, :acc_nr, :acc_balance)";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("acc_cust_id", bankCustomer.getCustId());
-        paraMap.put("acc_type", bankCustomer.getCustAccType());
-        paraMap.put("acc_nr", bankCustomer.getCustAccNr());
+        paraMap.put("acc_cust_id", bankAccount.getCustId());
+        paraMap.put("acc_type", bankAccount.getCustAccType());
+        paraMap.put("acc_nr", bankAccount.getCustAccNr());
         paraMap.put("acc_balance", 0);
         jdbcTemplate.update(sql, paraMap);
     }

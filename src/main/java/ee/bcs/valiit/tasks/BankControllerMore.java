@@ -1,5 +1,5 @@
-
 package ee.bcs.valiit.tasks;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +10,15 @@ public class BankControllerMore {
     @Autowired
     private BankService bankService;
 
-    @PostMapping("createCustomerBody")
-    public void createCustomerBody(@RequestBody BankCustomerData bankCustomer) {
+    @PostMapping("createCustomerB")
+    public void createCustomerB(@RequestBody BankCustomerData bankCustomer) {
         bankService.createCustomerBody(bankCustomer);
     }
 
     //  http://localhost:8080/bank/createCustomerAccount
     @PostMapping("createCustomerAccount")
-    public void createAccount(@RequestBody BankCustomerData bankCustomer) {
-        bankService.createCustomerAccount(bankCustomer);
+    public void createAccount(@RequestBody BankCustomerData bankAccount) {
+        bankService.createCustomerAccount(bankAccount);
     }
 
     // http://localhost:8080/bank/accountBalance?account_nr=EE6666

@@ -13,11 +13,16 @@ public class BankService {
         bankRepository.createCustomerBody(bankCustomer);
         return bankCustomer.getCustName() + " as a Bank customer has been created.";
     }
-
-    public String createCustomerAccount(BankCustomerData bankCustomer) {
-        bankRepository.createCustomerAccount(bankCustomer);
-        return "New account for ID " + bankCustomer.getCustId() + " has been created.\n" +
-                "This account is " + bankCustomer.getCustAccType() + ".";
+    /*    {
+    "custId":"7777",
+    "custAccType":"Current Account",
+    "custAccNr":"EE7777"
+     }   */
+    //  http://localhost:8080/bank/createCustomerAccount
+    public String createCustomerAccount(BankCustomerData bankAccount) {
+        bankRepository.createCustomerAccount(bankAccount);
+        return "New account for ID " + bankAccount.getCustId() + " has been created.\n" +
+                "This account is " + bankAccount.getCustAccType() + ".";
     }
 
     public int accountBalance(String account_nr) {
@@ -48,7 +53,7 @@ public class BankService {
             return "There is not enough cash in the account";
         } else {
             newAccBalanceFrom = oldAccBalanceFrom - amount;
-            bankRepository.updateAccountBalance(accountFrom, amount);
+            bankRepository.updateAccountBalance(accountFrom, newAccBalanceFrom);
             bankRepository.dataToTransHistory(accountFrom, null, "Money withrawal from account", amount);
         }
         return "New balance for account nr: " + accountFrom + " is: " + newAccBalanceFrom;
