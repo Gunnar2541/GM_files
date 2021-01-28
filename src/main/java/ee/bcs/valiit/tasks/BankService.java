@@ -2,6 +2,7 @@ package ee.bcs.valiit.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class BankService {
     @Autowired
     private BankRepository bankRepository;
 
+    @Transactional
     public String createCustomerBody(CustomerData bankCustomer) {
         bankRepository.createCustomerBody(bankCustomer);
         return bankCustomer.getCustName() + " as a Bank customer has been created.";
@@ -21,6 +23,7 @@ public class BankService {
     "custAccNr":"EE7777"
      }   */
     //  http://localhost:8080/bank/createCustomerAccount
+    @Transactional
     public String createCustomerAccount(Accounts bankAccount) {
         bankRepository.createCustomerAccount(bankAccount);
         return "New account for ID " + bankAccount.getAccountCustId() + " has been created.\n" +
@@ -33,6 +36,7 @@ public class BankService {
     }
 
     // http://localhost:8080/bank/depositMoney?account_nr_to=EE2222&amount=500
+    @Transactional
     public String depositMoney(String accountNrTo, Integer amount) {
         int newAccBalance;
         if (amount < 0)
@@ -47,6 +51,7 @@ public class BankService {
     }
 
     // http://localhost:8080/bank/withdrawMoney?accountFrom=EE5555&amount=125
+    @Transactional
     public String withdrawMoney(String accountFrom, int amount) {
         int newAccBalanceFrom;
         if (amount <= 0) {
@@ -64,6 +69,7 @@ public class BankService {
     }
 
     // http://localhost:8080/bank/transferMoney?accountFrom=EE2222&accountTo=EE3333&amount=130
+    @Transactional
     public String transferMoney(String accountFrom, String accountTo, int amount) {
         int newAccBalanceFrom;
         int newAccBalanceTo;
@@ -88,7 +94,7 @@ public class BankService {
     public List<CustomerData> getCustomerList() {
         return bankRepository.bankCustomers();
     }
-    
+
     public List<Accounts> getAccounts() {
         return bankRepository.bankAccounts();
     }
