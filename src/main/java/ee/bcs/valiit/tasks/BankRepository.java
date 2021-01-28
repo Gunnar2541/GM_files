@@ -1,11 +1,17 @@
 package ee.bcs.valiit.tasks;
 
+import liquibase.pro.packaged.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -20,8 +26,8 @@ public class BankRepository {
     "custAddress":"Talu 8"
      }   */
 //  http://localhost:8080/bank/createCustomerB
-    public void createCustomerBody(BankCustomerData bankCustomer) {
-        String sql = "INSERT INTO bank_accounts (customer_id, customer_address, cust_name) " +
+    public void createCustomerBody(CustomerData bankCustomer) {
+        String sql = "INSERT INTO customers (customers_id, customers_address, customers_name) " +
                 "VALUES (:cust_id, :customer_addressKey, :cust_nameKey)";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("cust_id", bankCustomer.getCustId());
@@ -36,11 +42,11 @@ public class BankRepository {
     "custAccNr":"EE7777"
      }   */
     //  http://localhost:8080/bank/createCustomerAccount
-    public void createCustomerAccount(BankCustomerData bankAccount) {
-        String sql = "INSERT INTO customer_accounts (account_cust_id, account_type, account_number, account_balance) " +
+    public void createCustomerAccount(Accounts bankAccount) {
+        String sql = "INSERT INTO accounts (accounts_cust_id, accounts_type, accounts_number, accounts_balance) " +
                 "VALUES (:acc_cust_id, :acc_type, :acc_nr, :acc_balance)";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("acc_cust_id", bankAccount.getCustId());
+        paraMap.put("acc_cust_id", bankAccount.getAccountCustId() );
         paraMap.put("acc_type", bankAccount.getCustAccType());
         paraMap.put("acc_nr", bankAccount.getCustAccNr());
         paraMap.put("acc_balance", 0);
@@ -49,15 +55,19 @@ public class BankRepository {
 
     // http://localhost:8080/bank/accountBalance?account_nr=EE6666
     public int accountBalance(@RequestParam String account_nr) {
-        String sql = "SELECT account_balance FROM customer_accounts WHERE account_number = :accParam";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("accParam", account_nr);
-        return jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+        try {
+            String sql = "SELECT accounts_balance FROM accounts WHERE accounts_number = :accParam";
+            Map<String, Object> paraMap = new HashMap<>();
+            paraMap.put("accParam", account_nr);
+            return jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+        }catch (EmptyResultDataAccessException e){
+            throw new MyException("Account not existing. Your error!");
+        }
     }
 
     //http://localhost:8080/bank/depositMoney?account_nr_to=EE2222&amount=500
     public int updateAccountBalance(@RequestParam String account_nr_to, @RequestParam Integer newAccBalance) {
-        String sql2 = "UPDATE customer_accounts SET account_balance = :newAccBalanceKey WHERE account_number = :accParam";
+        String sql2 = "UPDATE accounts SET accounts_balance = :newAccBalanceKey WHERE accounts_number = :accParam";
         Map<String, Object> paraMap2 = new HashMap<>();
         paraMap2.put("newAccBalanceKey", newAccBalance);
         paraMap2.put("accParam", account_nr_to);
@@ -69,8 +79,8 @@ public class BankRepository {
                                    @RequestParam String transType,
                                    @RequestParam Integer transAmount) {
 
-        String sql3 = "INSERT INTO transaction_history (transaction_account_from, transaction_account_to, " +
-                "transaction_type, transaction_amount) " +
+        String sql3 = "INSERT INTO transaction_history (transaction_history_account_from, " +
+                "transaction_history_account_to, transaction_history_type, transaction_history_amount) " +
                 "VALUES (:trans_acc_from, :trans_acc_to, :trans_type, :trans_amount)";
         Map<String, Object> paraMap3 = new HashMap<>();
         paraMap3.put("trans_acc_from", accountFrom);
@@ -79,4 +89,46 @@ public class BankRepository {
         paraMap3.put("trans_amount", transAmount);
         jdbcTemplate.update(sql3, paraMap3);
     }
+
+    public List<CustomerData> bankCustomers() {
+        String sql = "SELECT * FROM customers";
+        List result = jdbcTemplate.query(sql, new HashMap<>(), new bankClientsRowMapper());
+        return result;
+    }
+
+    private class bankClientsRowMapper implements RowMapper <CustomerData> {
+        @Override
+        public CustomerData mapRow(ResultSet resultSet, int i) throws SQLException {
+            CustomerData clients = new CustomerData();
+            clients.setCustId((resultSet.getString("customers_id")));
+            clients.setCustName((resultSet.getString("customers_name")));
+            clients.setCustAddress((resultSet.getString("customers_address")));
+            return clients;
+        }
+    }
+
+//    public List<Accounts> bankCustomersAndAccounts() {
+//        String sql = "SELECT * FROM customers e LEFT JOIN accounts v ON e.customers_id = v.accounts_cust_id";
+//        List result = jdbcTemplate.query(sql, new HashMap<>(), new customerAccountsRowMapper());
+//        return result;
+//    }
+
+
+    public List<Accounts> bankAccounts() {
+        String sql = "SELECT * FROM accounts";
+        List result = jdbcTemplate.query(sql, new HashMap<>(), new customerAccountsRowMapper());
+        return result;
+    }
+    private class customerAccountsRowMapper implements RowMapper <Accounts> {
+        @Override
+        public Accounts mapRow(ResultSet resultSet, int i) throws SQLException {
+            Accounts accounts = new Accounts();
+            accounts.setAccountCustId((resultSet.getString("accounts_cust_id")));
+            accounts.setCustAccType((resultSet.getString("accounts_type")));
+            accounts.setCustAccNr((resultSet.getString("accounts_number")));
+            accounts.setCustAccBalance((resultSet.getInt("accounts_balance")));
+            return accounts;
+        }
+    }
+
 }

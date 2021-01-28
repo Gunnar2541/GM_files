@@ -3,6 +3,8 @@ package ee.bcs.valiit.tasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("bank")
 @RestController
 public class BankControllerMore {
@@ -11,13 +13,13 @@ public class BankControllerMore {
     private BankService bankService;
 
     @PostMapping("createCustomerB")
-    public void createCustomerB(@RequestBody BankCustomerData bankCustomer) {
+    public void createCustomerB(@RequestBody CustomerData bankCustomer) {
         bankService.createCustomerBody(bankCustomer);
     }
 
     //  http://localhost:8080/bank/createCustomerAccount
     @PostMapping("createCustomerAccount")
-    public void createAccount(@RequestBody BankCustomerData bankAccount) {
+    public void createAccount(@RequestBody Accounts bankAccount) {
         bankService.createCustomerAccount(bankAccount);
     }
 
@@ -45,4 +47,20 @@ public class BankControllerMore {
     public String transferMoney(@RequestParam String accountFrom, @RequestParam String accountTo, @RequestParam int amount) {
         return bankService.transferMoney(accountFrom, accountTo, amount);
     }
+
+    // http://localhost:8080/bank/customerList
+    @GetMapping("customerList")
+    public List <CustomerData> customerList() {
+        return bankService.getCustomerList();
+    }
+
+
+    // http://localhost:8080/bank/customersAccounts
+    @GetMapping("customersAccounts")
+    public List <Accounts> accounts() {
+        return bankService.getAccounts();
+    }
+
+
+
 }
