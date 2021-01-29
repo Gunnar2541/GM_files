@@ -1,5 +1,7 @@
 package ee.bcs.valiit.tasks;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Lesson3 {
@@ -28,6 +30,13 @@ public class Lesson3 {
         System.out.println(c);
         System.out.println(d);
          */
+        Date date=java.util.Calendar.getInstance().getTime();
+        System.out.println(date);
+
+        Date todaysDate = new Date();
+        DateFormat df2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String str2 = df2.format(todaysDate);
+        System.out.println("ver 2"+str2);
     }
 
     public static int sum(int[] x) {

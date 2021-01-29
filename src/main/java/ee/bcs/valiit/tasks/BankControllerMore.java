@@ -36,9 +36,9 @@ public class BankControllerMore {
         return bankService.depositMoney(account_nr_to, amount);
     }
 
-    // http://localhost:8080/bank/withdrawMoney?account_from=EE2222&amount=125
+    // http://localhost:8080/bank/withdrawMoney?accountFrom=EE2222&amount=125
     @PutMapping("withdrawMoney")
-    public String withdrawMoney(@RequestParam String accountFrom, @RequestParam int amount) {
+    public String withdrawMoney(@RequestParam String accountFrom, @RequestParam Integer amount) {
         return bankService.withdrawMoney(accountFrom, amount);
     }
 

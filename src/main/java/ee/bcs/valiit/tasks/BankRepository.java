@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class BankRepository {
+
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -37,7 +39,7 @@ public class BankRepository {
     }
 
     /*    {
-    "custId":"7777",
+    "accountCustId":"7777",
     "custAccType":"Current Account",
     "custAccNr":"EE7777"
      }   */
@@ -46,7 +48,7 @@ public class BankRepository {
         String sql = "INSERT INTO accounts (accounts_cust_id, accounts_type, accounts_number, accounts_balance) " +
                 "VALUES (:acc_cust_id, :acc_type, :acc_nr, :acc_balance)";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("acc_cust_id", bankAccount.getAccountCustId() );
+        paraMap.put("acc_cust_id", bankAccount.getAccountCustId());
         paraMap.put("acc_type", bankAccount.getCustAccType());
         paraMap.put("acc_nr", bankAccount.getCustAccNr());
         paraMap.put("acc_balance", 0);
@@ -65,7 +67,7 @@ public class BankRepository {
         }
     }
 
-    //http://localhost:8080/bank/depositMoney?account_nr_to=EE2222&amount=500
+
     public int updateAccountBalance(@RequestParam String account_nr_to, @RequestParam Integer newAccBalance) {
         String sql2 = "UPDATE accounts SET accounts_balance = :newAccBalanceKey WHERE accounts_number = :accParam";
         Map<String, Object> paraMap2 = new HashMap<>();
@@ -77,16 +79,21 @@ public class BankRepository {
     public void dataToTransHistory(@RequestParam String accountFrom,
                                    @RequestParam String accountTo,
                                    @RequestParam String transType,
-                                   @RequestParam Integer transAmount) {
+                                   @RequestParam Integer transAmount,
+                                   @RequestParam Integer accBalanceAfterTransaction,
+                                   @RequestParam String dateTime) {
 
         String sql3 = "INSERT INTO transaction_history (transaction_history_account_from, " +
-                "transaction_history_account_to, transaction_history_type, transaction_history_amount) " +
-                "VALUES (:trans_acc_from, :trans_acc_to, :trans_type, :trans_amount)";
+                "transaction_history_account_to, transaction_history_type, transaction_history_amount, " +
+                "transaction_history_balance_after_transaction, transaction_history_date_time) " +
+                "VALUES (:trans_acc_from, :trans_acc_to, :trans_type, :trans_amount, :trans_end_balance, :trans_date)";
         Map<String, Object> paraMap3 = new HashMap<>();
         paraMap3.put("trans_acc_from", accountFrom);
         paraMap3.put("trans_acc_to", accountTo);
         paraMap3.put("trans_type", transType);
         paraMap3.put("trans_amount", transAmount);
+        paraMap3.put("trans_end_balance", accBalanceAfterTransaction);
+        paraMap3.put("trans_date", dateTime);
         jdbcTemplate.update(sql3, paraMap3);
     }
 

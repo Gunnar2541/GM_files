@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="test1 26JAN" author="Gunnar">
+    <changeSet id="test2 28JAN" author="Gunnar">
         <createTable tableName="customers">
             <column name="customers_counter" type="int" autoIncrement="true"/>
             <column name="customers_id" type="text">
@@ -41,7 +41,9 @@
                              references="accounts(accounts_number)"/>
             </column>
             <column name="transaction_history_type" type="text"/>
-            <column name="transaction_history_amount" type="int">
+            <column name="transaction_history_amount" type="int"/>
+            <column name="transaction_history_balance_after_transaction" type="int"/>
+            <column name="transaction_history_date_time" type="text">
             </column>
         </createTable>
 

@@ -9,6 +9,26 @@ public class Accounts {
     private int custAccBalance;
     private int transAmount;
     private String transType;
+    private String transDate;
+    private int balanceAfterTransaction;
+
+    public String getTransDate() {
+        return transDate;
+    }
+
+    public void setTransDate(String transDate) {
+        this.transDate = transDate;
+    }
+
+    public int getBalanceAfterTransaction() {
+        return balanceAfterTransaction;
+    }
+
+    public void setBalanceAfterTransaction(int balanceAfterTransaction) {
+        this.balanceAfterTransaction = balanceAfterTransaction;
+    }
+
+
 
 
     public String getAccountCustId() {

@@ -4,10 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class BankService {
+    Date todaysDate = new Date();
+    DateFormat df2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    String strDate = df2.format(todaysDate);
+
 
     @Autowired
     private BankRepository bankRepository;
@@ -18,7 +26,7 @@ public class BankService {
         return bankCustomer.getCustName() + " as a Bank customer has been created.";
     }
     /*    {
-    "custId":"7777",
+    "accountCustId":"7777",
     "custAccType":"Current Account",
     "custAccNr":"EE7777"
      }   */
@@ -38,21 +46,21 @@ public class BankService {
     // http://localhost:8080/bank/depositMoney?account_nr_to=EE2222&amount=500
     @Transactional
     public String depositMoney(String accountNrTo, Integer amount) {
-        int newAccBalance;
+        int newAccBalanceTo;
         if (amount < 0)
             throw new MyException("Check your amount input, cant add negative amount");
         else {
             int oldAccBalance = bankRepository.accountBalance(accountNrTo);
-            newAccBalance = oldAccBalance + amount;
-            bankRepository.updateAccountBalance(accountNrTo, newAccBalance);
-            bankRepository.dataToTransHistory(null, accountNrTo, "Money deposit to account", amount);
+            newAccBalanceTo = oldAccBalance + amount;
+            bankRepository.updateAccountBalance(accountNrTo, newAccBalanceTo);
+            bankRepository.dataToTransHistory(null, accountNrTo, "Money deposit to account", amount, newAccBalanceTo, strDate);
         }
-        return amount + " was deposited to account nr: " + accountNrTo + ". The new balance is " + newAccBalance;
+        return amount + " was deposited to account nr: " + accountNrTo + ". The new balance is " + newAccBalanceTo;
     }
 
-    // http://localhost:8080/bank/withdrawMoney?accountFrom=EE5555&amount=125
+    // http://localhost:8080/bank/withdrawMoney?accountFrom=EE5555&amount=250
     @Transactional
-    public String withdrawMoney(String accountFrom, int amount) {
+    public String withdrawMoney(String accountFrom, Integer amount) {
         int newAccBalanceFrom;
         if (amount <= 0) {
             throw new MyException("Check your amount input, cant add negative amount");
@@ -63,7 +71,7 @@ public class BankService {
         } else {
             newAccBalanceFrom = oldAccBalanceFrom - amount;
             bankRepository.updateAccountBalance(accountFrom, newAccBalanceFrom);
-            bankRepository.dataToTransHistory(accountFrom, null, "Money withrawal from account", amount);
+            bankRepository.dataToTransHistory(accountFrom, null, "Money withrawal from account", -amount, newAccBalanceFrom, strDate);
         }
         return "New balance for account nr: " + accountFrom + " is: " + newAccBalanceFrom;
     }
@@ -81,10 +89,11 @@ public class BankService {
         } else {
             newAccBalanceFrom = oldAccBalance - amount;
             bankRepository.updateAccountBalance(accountFrom, newAccBalanceFrom);
+            bankRepository.dataToTransHistory(accountFrom, accountTo, "FROM acc to acc transfer", -amount, newAccBalanceFrom, strDate);
             int oldAccBalanceTo = bankRepository.accountBalance(accountTo);
             newAccBalanceTo = oldAccBalanceTo + amount;
             bankRepository.updateAccountBalance(accountTo, newAccBalanceTo);
-            bankRepository.dataToTransHistory(accountFrom, accountTo, "acc to acc transfer", amount);
+            bankRepository.dataToTransHistory(accountFrom, accountTo, "TO acc to acc transfer", amount, newAccBalanceTo, strDate);
         }
         return "The balance after transactions is: \n " +
                 "for the account: " + accountFrom + ", the balance after outgoing transfer is: " + newAccBalanceFrom + "\n" +
