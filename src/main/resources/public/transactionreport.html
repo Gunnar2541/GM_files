@@ -18,24 +18,61 @@
 </p>
 <table border="1" width="1000px" rowspan="6">
     <tr bgcolor="#faebd7">
-        <td>Transaction ID</td>
-        <td>Account from</td>
-        <td>Account to</td>
-        <td>Transaction type</td>
-        <td>Transaction amount</td>
-        <td>Balance after transaction</td>
-        <td>Transaction date/time</td>
+        <td id="trId">Transaction ID</td>
+        <td id="accFr">Account from</td>
+        <td id="accTo">Account to</td>
+        <td id="trType">Transaction type</td>
+        <td id="trAmt">Transaction amount</td>
+        <td id="accBal">Balance after transaction</td>
+        <td id="trDate">Transaction date/time</td>
     </tr>
 </table>
 <br/>
 <script>
     function getAllTransactions(){
         fetch("http://localhost:8080/bank/customerList")
-
+        .then(result => result.json())
+        .then(function(result){
+            let tableElement = document.getElementById("requestAllTransactions");
+            tableElement.innerHTML = "";
+            for (let element of result) {
+                let newRowElement = document.createElement("tr");
+                tableElement.appendChild(newRowElement)
+                //transaction_history_id
+                let newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_id;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_account_from
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_account_from;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_account_to
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_account_to;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_account_type
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_account_type;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_account_amount
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_account_amount;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_balance_after_transaction
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_balance_after_transaction;
+                newRowElement.appendChild(newCellElement)
+                //transaction_history_date_time
+                newCellElement = document.createElement("td");
+                newCellElement.innerText = element.transaction_history_date_time;
+                newRowElement.appendChild(newCellElement)
+            }
+            console.log(result);
+        })
     }
-
+    let requestAllTransactions = document.getElementById("requestAllTransactions");
+    requestAllTransactions.onclick = getAllTransactions;
 </script>
-
 
 <h3>Account balance request</br></h3>
 <p>
