@@ -12,15 +12,27 @@ public class BankControllerMore {
     @Autowired
     private BankService bankService;
 
+     /*  {
+    "custId":"7777",
+    "custName":"Thomas Dwing",
+    "custAddress":"Dingeling 7"
+     }   */
+    //  http://localhost:8080/bank/createCustomerB
     @PostMapping("createCustomerB")
-    public void createCustomerB(@RequestBody CustomerData bankCustomer) {
+    public String createCustomerB(@RequestBody CustomerData bankCustomer) {
         bankService.createCustomerBody(bankCustomer);
+        return "Bank customer has been created.";
     }
-
+    /*    {
+    "accountCustId":"7777",
+    "custAccType":"Current Account",
+    "custAccNr":"EE7777"
+     }   */
     //  http://localhost:8080/bank/createCustomerAccount
     @PostMapping("createCustomerAccount")
-    public void createAccount(@RequestBody Accounts bankAccount) {
+    public String createAccount(@RequestBody Accounts bankAccount) {
         bankService.createCustomerAccount(bankAccount);
+        return "Account has been created";
     }
 
     // http://localhost:8080/bank/accountBalance?account_nr=EE6666
@@ -60,7 +72,4 @@ public class BankControllerMore {
     public List <Accounts> accounts() {
         return bankService.getAccounts();
     }
-
-
-
 }

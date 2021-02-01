@@ -2,84 +2,153 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>B90 Customer Data Input</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div style="text-align: center">
-    <table style="margin-left:auto;margin-right:auto;" border="1" width="50%">
-        <tr>
-            <td>test</td>
-        </tr>
+<img src="BankLogo.jpg"  alt=width="100", height="100"/>
+
+<h1>Welcome to bank customer data input interface</br></h1>
+
+<a href="transactions.html">For transaction input interface, please click the link</br></a>
+<a href="transactionreport.html">For transactions report, please click the link<br></a>
+
+<h3>To create new customer, fill the fields.</br></h3>
+
+<div style="text-align: left">
+    <p>
+        Enter your ID: <input id="custrId"/>
+    </p>
+    <p>
+        Enter your name: <input id="custrName">
+    </p>
+    <p>
+        Enter your address: <input id="custrAddress"/>
+    </p>
+    <p>
+    <button id="saveCustDataButton">Save customer data</button>
+    </p>
+    <table id="resultTableCustomer" border="1">
     </table>
-    <div id="container">
-        Tühi div
-    </div>
-    <form method="post">
-    valik1: <input type="radio" name="a">
-    <input type="radio" name="a">
-    <input type="radio" name="a">
-    <input type="radio" name="b">
-    <input type="radio" name="b">
-    <input type="radio" name="b">
-    <br>
-    hidden: <input type="hidden">
-    <br>
-    text: <input id="textElement" type="text"/>
-    <br>
-    password: <input type="password"/>
-    <br>
-    textarea: <textarea name="aa"></textarea>
-    <br>
-    select:
-    <select>
-        <option>valik 1</option>
-        <option>valik 2</option>
-        <option>valik 3</option>
-    </select>
-    <br>
-    fail: <input type="file"/>
-    <br>
-    number: <input type="number"/>
-    <br>
-    email: <input type="email"/>
-    <br>
-    date: <input type="date">
-    <br>
-    datetime: <input type="datetime-local">
-    <br>
-    week: <input type="week">
-    <br>
-    time: <input type="time">
-    <br>
-    color: <input type="color">
-    <br>
-    range: <input type="range">
-    <br>
-    tel: <input type="tel">
-    <input type="submit">
-    </form>
-
     <script>
-        function calculateLoan(amount,months,interest = 10, name="John"){
-            return months;
+        function createNewCustomer() {
+            let newCustomer ={
+                custId : document.getElementById("custrId").value,
+                custName : document.getElementById("custrName").value,
+                custAddress : document.getElementById("custrAddress").value}
+
+            fetch("http://localhost:8080/bank/createCustomerB",
+                {   method: "POST",
+                    headers: { "Content-Type":"application/json" },
+                    body: JSON.stringify(newCustomer)
+                })
+                .then(result => result.text())
+                .then(
+                    function (result) {
+                        console.log(result);
+                        let table = document.getElementById("resultTableCustomer");
+                        let newRow = document.createElement("tr");
+                        let newCell1 = document.createElement("td");
+                        newCell1.innerText = result;
+                        newRow.append(newCell1);
+                        let newCell2 = document.createElement("td");
+                        newCell2.innerText = newCustomer.custName;
+                        newRow.append(newCell2);
+                        table.append(newRow)
+                    })
         }
-        console.log(calculateLoan(1000, 36, 7, "John Snow"));
-        console.log(calculateLoan(1000, 36, 7, "John", "A"));
-        console.log(calculateLoan(1000, 36));
-        console.log(calculateLoan());
-        let element = document.getElementById("textElement");
-        element.value = "midagi";
-        let myElement = document.getElementById("container");
-        let myNewElement = document.createElement("input");
-        myElement.append(myNewElement);
-        myNewElement.value="mingi tekst";
+        let saveCustDataButton = document.getElementById("saveCustDataButton");
+        saveCustDataButton.onclick = createNewCustomer;
+
     </script>
+
 </div>
+</br>
+</br>
+</br>
+<h3></br>To create new account, fill the fields.</br></h3>
+<div style="text-align: left">
+    <p>
+        Enter your ID: <input id="accountsCustId"/>
+    </p>
+        <p>
+            Enter account number in format "EE1234" : <input id="accountsAccountNr">
+        </p>
+    <p>
+        Select the account type :
+            <select id="accountType"> :
+                <option>Deposit Account</option>
+                <option>Loan Account</option>
+                <option>Current Account</option>
+            </select>
+
+    </p>
+        <br>
+    <p>
+        <button id="saveAccountsData">Save account Details</button>
+    </p>
+    <table id="resultTableAccount" border="1">
+    </table>
+    <script>
+        function createNewAccount() {
+            let newAccount ={
+                accountCustId : document.getElementById("accountsCustId").value,
+                custAccType : document.getElementById("accountType").value,
+                custAccNr : document.getElementById("accountsAccountNr").value
+            }
+            fetch("http://localhost:8080/bank/createCustomerAccount",
+                {   method: "POST",
+                    headers: { "Content-Type":"application/json" },
+                    body: JSON.stringify(newAccount)
+                })
+                .then(result => result.text())
+                .then(
+                    function (result) {
+                        console.log(result);
+                        let table = document.getElementById("resultTableAccount");
+                        let newRow = document.createElement("tr");
+                        let newCell1 = document.createElement("td");
+                        newCell1.innerText = result;
+                        newRow.append(newCell1);
+                        let newCell2 = document.createElement("td");
+                        newCell2.innerText = newAccount.custAccNr;
+                        newRow.append(newCell2);
+                        table.append(newRow)
+                    })
+        }
+        let saveAccountsData = document.getElementById("saveAccountsData");
+        saveAccountsData.onclick = createNewAccount;
+
+    </script>
+
+</div>
+</br>
+</br>
+Mingi tekst Gunnarile</br>
+Ja uus tekst</br>
+<a href="index2.html">"Kuhu Sa lähed?"</a>
+<h1>h1</h1>
+<ul>
+    <li>List 1</li>
+    <li>List 2</li>
+</ul>
+<h3>h3</h3>
+<dl>
+    <dt>Term 1</dt>
+    <dd>Definition of term </dd>
+</dl>
+
+<h6>h6</h6>
+<ol>
+    <li>List 1</li>
+    <li>List 2</li>
+</ol>
+
+<h3>h6</h3>
+
+<img src="https://static.toiimg.com/photo/72975551.cms"  alt=width="100", height="100"/>
 </body>
+<script>
+//    alert("Mis juhtus!?!?")
+</script>
 </html>
-
-
-
-
-
-

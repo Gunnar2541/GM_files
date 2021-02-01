@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B90 Transactions</title>
+</head>
+<body>
+<img src="BankLogo.jpg" alt=width="100", height="100"/>
+<h1>Transaction reports</br></h1>
+
+<a href="transactions.html">"For transaction input interface, please click here"</br></a>
+<a href="index.html">"For customer and account data input interface, please click here"</br></a>
+</br>
+
+<h3>All transactions report request</br></h3>
+<p>
+<button id="requestAllTransactions"> Request all transactions</button>
+</p>
+<table border="1" width="1000px" rowspan="6">
+    <tr bgcolor="#faebd7">
+        <td>Transaction ID</td>
+        <td>Account from</td>
+        <td>Account to</td>
+        <td>Transaction type</td>
+        <td>Transaction amount</td>
+        <td>Balance after transaction</td>
+        <td>Transaction date/time</td>
+    </tr>
+</table>
+<br/>
+<script>
+    function getAllTransactions(){
+        fetch("http://localhost:8080/bank/customerList")
+
+    }
+
+</script>
+
+
+<h3>Account balance request</br></h3>
+<p>
+    <button id="askCustomerAccountBalanceButton">Get customer account balance</button>
+</p>
+<p>
+    Enter customer acc Nr: <input id="custId"/>
+</p>
+<table id="resultTable" border="1">
+</table>
+
+<script>
+    function makeRequest() {
+        let custAcc = document.getElementById("custId");
+        fetch("http://localhost:8080/bank/accountBalance?account_nr=" + custAcc.value,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+            })
+            .then(result => result.text())
+            .then(
+                function (result) {
+                    console.log(result);
+                    let table = document.getElementById("resultTable");
+                    let newRow = document.createElement("tr");
+                    let newCell1 = document.createElement("td");
+                    newCell1.innerText = result;
+                    newRow.append(newCell1);
+                    let newCell2 = document.createElement("td");
+                    newCell2.innerText = "Place for other data/test";
+                    newRow.append(newCell2);
+                    table.append(newRow)
+                })
+            /*
+            .then(function (result) {
+                alert(result);
+            })
+            */
+    }
+
+    let askCustomerAccountBalanceButton = document.getElementById("askCustomerAccountBalanceButton");
+    askCustomerAccountBalanceButton.onclick = makeRequest;
+
+</script>
+<br/>
+<br/>
+<br/>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B90 transaction data input</title>
+</head>
+<body>
+<img src="BankLogo.jpg"  alt=width="100", height="100"/>
+<h1>Welcome to bank transfer input interface</br></h1>
+
+<a href="index.html">For customer and account data input interface, please click here<br></a>
+<a href="transactionreport.html">For transactions report, please click here<br></a>
+
+<h3>To put a deposit, fill the fields.</br></h3>
+
+<div style="text-align: left">
+    <p>
+        Enter account number in format "EE1234": <input id="custAccNrDepo"/>
+    </p>
+    <p>
+        Enter amount: <input id="transAmountDepo">
+    </p>
+    <p>
+        <button id="saveDepositDataButton">Make a deposit</button>
+    </p>
+</div>
+<table id="resultTableDepo" border="1">
+</table>
+<script>
+    function makeDeposit() {
+        let custAcc = document.getElementById("custAccNrDepo");
+        let custAmount = document.getElementById("transAmountDepo");
+        fetch("http://localhost:8080/bank/depositMoney?account_nr_to="+custAcc.value+"&amount="+custAmount.value,
+            {   method: "PUT",
+                headers: { "Content-Type":"application/json" },
+            })
+            .then(result => result.text())
+            .then(
+                function (result) {
+                    console.log(result);
+                    let table = document.getElementById("resultTableDepo");
+                    let newRow = document.createElement("tr");
+                    let newCell1 = document.createElement("td");
+                    newCell1.innerText = result;
+                    newRow.append(newCell1);
+                    table.append(newRow)
+                })
+    }
+    let saveDepositDataButton = document.getElementById("saveDepositDataButton");
+    saveDepositDataButton.onclick = makeDeposit;
+
+</script>
+
+
+<h3></br>To withdraw money, fill the fields.</br></h3>
+<div style="text-align: left">
+    <p>
+        Enter account number in format "EE1234" : <input id="custAccNrWithdraw">
+    </p>
+    <p>
+        Enter amount: <input id="transAmountWithdraw">
+    </p>
+    <p>
+        <button id="saveWithdrawData">Save withdraw transaction details</button>
+    </p>
+
+</div>
+<table id="resultTableWithraw" border="1">
+</table>
+<script>
+    function makeWithraw() {
+        let custAcc = document.getElementById("custAccNrWithdraw");
+        let custAmount = document.getElementById("transAmountWithdraw");
+        fetch("http://localhost:8080/bank/withdrawMoney?accountFrom="+custAcc.value+"&amount="+custAmount.value,
+            {   method: "PUT",
+                headers: { "Content-Type":"application/json" },
+            })
+            .then(result => result.text())
+            .then(
+                function (result) {
+                    console.log(result);
+                    let table = document.getElementById("resultTableWithraw");
+                    let newRow = document.createElement("tr");
+                    let newCell1 = document.createElement("td");
+                    newCell1.innerText = result;
+                    newRow.append(newCell1);
+                    table.append(newRow)
+                })
+    }
+    let saveWithdrawData = document.getElementById("saveWithdrawData");
+    saveWithdrawData.onclick = makeWithraw;
+
+</script>
+
+<h3></br>To transfer money, fill the fields.</br></h3>
+<div style="text-align: left">
+    <p>
+        Enter account FROM number in format "EE1234" : <input id="custAccNrTransFrom">
+    </p>
+    <p>
+        Enter account To number in format "EE1234" : <input id="custAccNrTransTo">
+    </p>
+    <p>
+        Enter amount: <input id="transAmount">
+    </p>
+    <p>
+        <button id="saveTransactionData">Save acc-acc transaction details</button>
+    </p>
+    <table id="resultTableTransaction" border="1">
+    </table>
+    <script>
+        function makeTransfer() {
+            let custAccFrom = document.getElementById("custAccNrTransFrom");
+            let custAccTo = document.getElementById("custAccNrTransTo");
+            let custAmount = document.getElementById("transAmount");
+            fetch("http://localhost:8080/bank/transferMoney?accountFrom="+custAccFrom.value+"&accountTo="+custAccTo.value+"&amount="+custAmount.value,
+                {   method: "PUT",
+                    headers: { "Content-Type":"application/json" },
+                })
+                .then(result => result.text())
+                .then(
+                    function (result) {
+                        console.log(result);
+                        let table = document.getElementById("resultTableTransaction");
+                        let newRow = document.createElement("tr");
+                        let newCell1 = document.createElement("td");
+                        newCell1.innerText = result;
+                        newRow.append(newCell1);
+                        table.append(newRow)
+                    })
+        }
+        let saveTransactionData = document.getElementById("saveTransactionData");
+        saveTransactionData.onclick = makeTransfer;
+
+    </script>
+</div>
+</body>
+</html>

@@ -22,12 +22,6 @@ public class BankRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    /*    {
-    "custId":"1111",
-    "custName":"Thomas Thol",
-    "custAddress":"Talu 8"
-     }   */
-//  http://localhost:8080/bank/createCustomerB
     public void createCustomerBody(CustomerData bankCustomer) {
         String sql = "INSERT INTO customers (customers_id, customers_address, customers_name) " +
                 "VALUES (:cust_id, :customer_addressKey, :cust_nameKey)";
@@ -38,12 +32,6 @@ public class BankRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    /*    {
-    "accountCustId":"7777",
-    "custAccType":"Current Account",
-    "custAccNr":"EE7777"
-     }   */
-    //  http://localhost:8080/bank/createCustomerAccount
     public void createCustomerAccount(Accounts bankAccount) {
         String sql = "INSERT INTO accounts (accounts_cust_id, accounts_type, accounts_number, accounts_balance) " +
                 "VALUES (:acc_cust_id, :acc_type, :acc_nr, :acc_balance)";
@@ -66,7 +54,6 @@ public class BankRepository {
             throw new MyException("Account not existing. Your error!");
         }
     }
-
 
     public int updateAccountBalance(@RequestParam String account_nr_to, @RequestParam Integer newAccBalance) {
         String sql2 = "UPDATE accounts SET accounts_balance = :newAccBalanceKey WHERE accounts_number = :accParam";
@@ -137,5 +124,4 @@ public class BankRepository {
             return accounts;
         }
     }
-
 }

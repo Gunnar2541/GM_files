@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gunnari Pank</title>
+</head>
+<body>
+<p>Min value</p>
+a: <input id="min_a">
+b: <input id="min_b">
+<button id="min_button" type="button">Min</button>
+vastus: <input id="min_answer" disabled/>
+<script>
+let min_a = document.getElementById("min_a");
+let min_b = document.getElementById("min_b");
+let min_answer = document.getElementById("min_answer");
+function pressButtonFunc(){
+    if (min_a.value < min_b.value){
+        min_answer.value = min_a.value;
+    }else{
+        min_answer.value = min_b.value;
+    }
+}
+let element = document.getElementById("min_button");
+element.addEventListener("click", pressButtonFunc)
+</script>
+
+<p>Max value</p>
+a: <input id="max_a">
+b: <input id="max_b">
+<button id="max_button" type="button">Max</button>
+vastusMax: <input id="max_answer" disabled/>
+<script>
+    let max_a = document.getElementById("max_a");
+    let max_b = document.getElementById("max_b");
+    let max_answer = document.getElementById("max_answer");
+    function pressButtonFuncMax(){
+        if (max_a.value > max_b.value){
+            max_answer.value = max_a.value;
+        }else{
+            max_answer.value = max_b.value;
+        }
+    }
+    let elementMax = document.getElementById("max_button");
+    elementMax.addEventListener("click", pressButtonFuncMax)
+</script>
+
+<p>Abs value</p>
+a: <input id="abs_a">
+<button id="abs_button" type="button">Abs</button>
+vastus Abs: <input id="abs_answer" disabled/>
+<script>
+    let abs_a = document.getElementById("abs_a");
+    let abs_answer = document.getElementById("abs_answer");
+    function pressButtonFuncAbs(){
+        if (abs_a.value < 0){
+            abs_answer.value = abs_a.value*-1;
+        }else{
+            abs_answer.value = abs_a.value;
+        }
+    }
+    let elementAbs = document.getElementById("abs_button");
+    elementAbs.addEventListener("click", pressButtonFuncAbs)
+</script>
+
+<p>Is equal</p>
+a: <input id="equal_a">
+<button id="button" type="button">Equals</button>
+vastus equal: <input id="answer" disabled/>
+<script>
+    let a = document.getElementById("equal_a");
+    let answer = document.getElementById("answer");
+    function pressButtonFunc(){
+        if (a.value%2===0){
+            answer.value = true;
+        }else{
+            answer.value = false;
+        }
+    }
+    let elementEquals = document.getElementById("button");
+    elementEquals.addEventListener("click", pressButtonFunc)
+</script>
+
+<p>Min/Max value out of 3</p>
+a: <input id="min3_a">
+b: <input id="min3_b">
+c: <input id="min3_c">
+<button id="min3_button" type="button">Min 3</button>
+<button id="max3_button" type="button">Max 3</button>
+vastusMin: <input id="min3_answer" disabled/>
+vastusMax: <input id="max3_answer" disabled/>
+<script>
+    let min3_a = document.getElementById("min3_a");
+    let min3_b = document.getElementById("min3_b");
+    let min3_c = document.getElementById("min3_c");
+    let min3_answer = document.getElementById("min3_answer");
+    function pressButtonFuncMin3(){
+        if (min3_a.value <= min3_b.value&&min3_a.value <= min3_c.value){
+            min3_answer.value = min3_a.value;
+        }else if (min3_b.value <= min3_c.value&&min3_b.value <= min3_a.value){
+            min3_answer.value = min3_b.value;
+        }else{
+            min3_answer.value = min3_c.value;
+        }
+    }
+    let element3min = document.getElementById("min3_button");
+    element3min.addEventListener("click", pressButtonFuncMin3)
+
+    let max3_answer = document.getElementById("max3_answer");
+    function pressButtonFuncMax3(){
+        if (min3_a.value >= min3_b.value&&min3_a.value >= min3_c.value){
+            max3_answer.value = min3_a.value;
+        }else if (min3_b.value >= min3_c.value&&min3_b.value >= min3_a.value){
+            max3_answer.value = min3_b.value;
+        }else{
+            max3_answer.value = min3_c.value;
+        }
+    }
+    let element3m = document.getElementById("max3_button");
+    element3m.addEventListener("click", pressButtonFuncMax3)
+</script>
+
+
+
+
+
+</body>
+
+<script>
+//    alert("Mis juhtus!?!?")
+</script>
+
+</html>
