@@ -16,11 +16,10 @@
 <p>
 <button id="requestAllTransactions"> Request all transactions</button>
 </p>
-<table border="1" width="1000px" rowspan="6">
+<table id="allTransReport" border="1" width="1000px" rowspan="6">
     <tr bgcolor="#faebd7">
         <td id="trId">Transaction ID</td>
-        <td id="accFr">Account from</td>
-        <td id="accTo">Account to</td>
+        <td id="accNr">Account Number</td>
         <td id="trType">Transaction type</td>
         <td id="trAmt">Transaction amount</td>
         <td id="accBal">Balance after transaction</td>
@@ -30,41 +29,37 @@
 <br/>
 <script>
     function getAllTransactions(){
-        fetch("http://localhost:8080/bank/customerList")
+        fetch("http://localhost:8080/bank/fullTransactionHistory")
         .then(result => result.json())
         .then(function(result){
-            let tableElement = document.getElementById("requestAllTransactions");
-            tableElement.innerHTML = "";
+            let tableElement = document.getElementById("allTransReport");
+            //tableElement.innerHTML = "";
             for (let element of result) {
                 let newRowElement = document.createElement("tr");
                 tableElement.appendChild(newRowElement)
-                //transaction_history_id
+
                 let newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_id;
+                newCellElement.innerText = element.transId;
                 newRowElement.appendChild(newCellElement)
-                //transaction_history_account_from
+
                 newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_account_from;
+                newCellElement.innerText = element.custAccNr;
                 newRowElement.appendChild(newCellElement)
-                //transaction_history_account_to
+
                 newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_account_to;
+                newCellElement.innerText = element.transType;
                 newRowElement.appendChild(newCellElement)
-                //transaction_history_account_type
+
                 newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_account_type;
+                newCellElement.innerText = element.transAmount;
                 newRowElement.appendChild(newCellElement)
-                //transaction_history_account_amount
+
                 newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_account_amount;
+                newCellElement.innerText = element.balanceAfterTransaction;
                 newRowElement.appendChild(newCellElement)
-                //transaction_history_balance_after_transaction
+
                 newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_balance_after_transaction;
-                newRowElement.appendChild(newCellElement)
-                //transaction_history_date_time
-                newCellElement = document.createElement("td");
-                newCellElement.innerText = element.transaction_history_date_time;
+                newCellElement.innerText = element.transDate;
                 newRowElement.appendChild(newCellElement)
             }
             console.log(result);
@@ -72,6 +67,67 @@
     }
     let requestAllTransactions = document.getElementById("requestAllTransactions");
     requestAllTransactions.onclick = getAllTransactions;
+</script>
+
+<h3>Single Customer Acoount Transaction report</br></h3>
+<p>
+    <button id="requestCustomerTransactions"> Request Customer transactions</button>
+</p>
+<p>
+    Enter customer acc Nr: <input id="custIdTrans"/>
+</p>
+<table id="customerTransReport" border="1" width="1000px" rowspan="6">
+    <tr bgcolor="#faebd7">
+        <td id="trIdc">Transaction ID</td>
+        <td id="accNrc">Account Number</td>
+        <td id="trTypec">Transaction type</td>
+        <td id="trAmtc">Transaction amount</td>
+        <td id="accBalc">Balance after transaction</td>
+        <td id="trDatec">Transaction date/time</td>
+    </tr>
+</table>
+<br/>
+<script>
+    function getCustomerTransactions(){
+        let custAccC = document.getElementById("custIdTrans");
+        fetch("http://localhost:8080/bank/customerTransactionHistory?account_nr="+custAccC.value)
+            .then(result => result.json())
+            .then(function(result){
+                let tableElement = document.getElementById("customerTransReport");
+                //tableElement.innerHTML = "";
+                for (let element of result) {
+                    let newRowElement = document.createElement("tr");
+                    tableElement.appendChild(newRowElement)
+
+                    let newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.transId;
+                    newRowElement.appendChild(newCellElement)
+
+                    newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.custAccNr;
+                    newRowElement.appendChild(newCellElement)
+
+                    newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.transType;
+                    newRowElement.appendChild(newCellElement)
+
+                    newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.transAmount;
+                    newRowElement.appendChild(newCellElement)
+
+                    newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.balanceAfterTransaction;
+                    newRowElement.appendChild(newCellElement)
+
+                    newCellElement = document.createElement("td");
+                    newCellElement.innerText = element.transDate;
+                    newRowElement.appendChild(newCellElement)
+                }
+                console.log(result);
+            })
+    }
+    let requestCustomerTransactions = document.getElementById("requestCustomerTransactions");
+    requestCustomerTransactions.onclick = getCustomerTransactions;
 </script>
 
 <h3>Account balance request</br></h3>

@@ -26,6 +26,9 @@
         Enter your address: <input id="custrAddress"/>
     </p>
     <p>
+        Your user name is your ID, please enter your desired password: <input id="custrPassword"/>
+    </p>
+    <p>
     <button id="saveCustDataButton">Save customer data</button>
     </p>
     <table id="resultTableCustomer" border="1">
@@ -35,7 +38,8 @@
             let newCustomer ={
                 custId : document.getElementById("custrId").value,
                 custName : document.getElementById("custrName").value,
-                custAddress : document.getElementById("custrAddress").value}
+                custAddress : document.getElementById("custrAddress").value,
+                custPwUncoded : document.getElementById("custrPassword").value}
 
             fetch("http://localhost:8080/bank/createCustomerB",
                 {   method: "POST",

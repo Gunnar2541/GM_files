@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -35,6 +36,10 @@ public class BankService {
     public int accountBalance(String account_nr) {
             return bankRepository.accountBalance(account_nr);
     }
+
+    //public String userPassword(String cust_id) {
+    //    return bankRepository.userPassword(cust_id); }
+
 
     @Transactional
     public String depositMoney(String accountNrTo, Integer amount) {
@@ -96,4 +101,12 @@ public class BankService {
     public List<Accounts> getAccounts() {
         return bankRepository.bankAccounts();
     }
+
+    public List<Accounts> getTransactionHistory() {
+        return bankRepository.transactionHistory();
+    }
+
+    //public List<Accounts> getcustomerTransactionHistory(String accountNr) {
+    //   return bankRepository.customerTransactionHistory(accountNr); }
+
 }

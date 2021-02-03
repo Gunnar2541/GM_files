@@ -2,7 +2,7 @@ package ee.bcs.valiit.tasks;
 
 public class Accounts {
 
-
+    private int transId;
     private String accountCustId;
     private String custAccNr;
     private String custAccType;
@@ -11,6 +11,14 @@ public class Accounts {
     private String transType;
     private String transDate;
     private int balanceAfterTransaction;
+
+    public int getTransId() {
+        return transId;
+    }
+
+    public void setTransId(int transId) {
+        this.transId = transId;
+    }
 
     public String getTransDate() {
         return transDate;

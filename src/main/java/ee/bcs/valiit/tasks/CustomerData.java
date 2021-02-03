@@ -6,6 +6,25 @@ public class CustomerData {
     private String custName;
     private String custAddress;
 
+    public String getCustPwCoded() {
+        return custPwCoded;
+    }
+
+    public void setCustPwCoded(String custPwCoded) {
+        this.custPwCoded = custPwCoded;
+    }
+
+    public String getCustPwUncoded() {
+        return custPwUncoded;
+    }
+
+    public void setCustPwUncoded(String custPwUncoded) {
+        this.custPwUncoded = custPwUncoded;
+    }
+
+    private String custPwCoded;
+    private String custPwUncoded;
+
     public String getCustName() {
         return custName;
     }

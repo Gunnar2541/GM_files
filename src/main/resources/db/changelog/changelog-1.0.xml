@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="test2 28JAN" author="Gunnar">
+    <changeSet id="test3 02feb" author="Gunnar">
         <createTable tableName="customers">
             <column name="customers_counter" type="int" autoIncrement="true"/>
             <column name="customers_id" type="text">
@@ -13,6 +13,12 @@
             </column>
             <column name="customers_name" type="text"/>
             <column name="customers_address" type="text"/>
+            <column name="customers_pw_coded" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="customers_pw_uncoded" type="text">
+                <constraints unique="true"/>
+            </column>
         </createTable>
 
         <createTable tableName="accounts">
