@@ -7,13 +7,14 @@
     Customer name: <input v-model="customer.custName" placeholder="Full name"><br>
     Customer address: <input v-model="customer.custAddress" placeholder="Address"><br>
     Desired password: <input v-model="customer.custPwUncoded" placeholder="Password"><br>
+    <br>
     <button v-on:click="saveCustDataInHtml()">Save new Customer data</button>
-    <br>
+    <br><br>
     <button v-on:click="getCustData()">Get customer list</button>
-    <br>
+    <br><br>
     <!-- {{customers}} topelt loogelistes annab loetelu ehk array -->
 
-    <table border="1">
+    <table border="1" align="center">
       <tr>
         <th>Id</th>
         <th>Name</th>

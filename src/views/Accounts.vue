@@ -16,8 +16,8 @@
 
     <br><br>
     <button v-on:click="saveCustAccInHtml()">Save new customer account</button>
-    <br>
-    <table border="0"><br>
+    <br><br>
+    <table border="0" align="center">
       <tr>
         <th>Account creation result</th>
       </tr>

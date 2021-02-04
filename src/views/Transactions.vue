@@ -1,16 +1,16 @@
 <template>
   <div class="register">
     <img alt="Bank logo" src="../assets/BankLogo.jpg"><br>
-    <h1>Deposit placement</h1>
-    Account number to take money from: <input v-model="custAccFrom" placeholder="Account nr EE1234"> <br>
-    Account number to send money to: <input v-model="custAccTo" placeholder="Account nr EE1234"> <br>
-    Amount to place/witdraw: <input v-model="custAmount" placeholder="Amount"><br>
+    <h1>Transactions</h1>
+    Account number to take money from: <input v-model="custAccFrom" placeholder="EE1234"> <br><br>
+    Account number to send money to: <input v-model="custAccTo" placeholder="EE1234"> <br><br>
+    Amount to place/withdraw: <input v-model="custAmount" placeholder="Amount"><br><br>
 
-    <button v-on:click="depositPlacementButton()">Execute new deposit</button><br>
-    <button v-on:click="withdrawMoneyButton()">Execute new withdrawal</button><br>
-    <button v-on:click="transferMoneyButton()">Execute new acc-to-acc transaction</button><br>
-
-    <table border="0"><br>
+    <button v-on:click="depositPlacementButton()">Execute new deposit</button><br><br>
+    <button v-on:click="withdrawMoneyButton()">Execute new withdrawal</button><br><br>
+    <button v-on:click="transferMoneyButton()">Execute new acc-to-acc transaction</button><br><br>
+    <br>
+    <table border="0" align="center">
       <tr>
         <th>Deposit placement confirmation</th>
       </tr>
@@ -18,7 +18,7 @@
         <td>{{depoActionResult}}</td>
       </tr>
     </table>
-    <table border="0"><br>
+    <table border="0" align="center">
       <tr>
         <th>Wthdrawal confirmation</th>
       </tr>
@@ -26,7 +26,7 @@
         <td>{{withdrawActionResult}}</td>
       </tr>
     </table>
-    <table border="0"><br>
+    <table border="0" align="center">
       <tr>
         <th>Transfer confirmation</th>
       </tr>
