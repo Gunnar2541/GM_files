@@ -47,6 +47,6 @@ public class MyErrorHandler extends ResponseEntityExceptionHandler {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(ex.getMessage());
         //response.setMessage("Midagi läks pekki");
-        return new ResponseEntity<Object>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

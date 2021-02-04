@@ -16,7 +16,7 @@ public class SpringSecurityCofiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/home")
                 .permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 //.defaultSuccessUrl("/index.html", true) //ei tööta hetkel

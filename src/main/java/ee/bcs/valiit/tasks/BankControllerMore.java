@@ -10,6 +10,7 @@ import java.util.List;
 public class BankControllerMore {
 
     @Autowired
+
     private BankService bankService;
 
      /*  {
@@ -62,9 +63,9 @@ public class BankControllerMore {
     }
 
     // http://localhost:8080/bank/transferMoney?accountFrom=EE2222&accountTo=EE3333&amount=130
-    @PutMapping("transferMoney")
     @CrossOrigin
-    public String transferMoney(@RequestParam String accountFrom, @RequestParam String accountTo, @RequestParam int amount) {
+    @PutMapping("transferMoney")
+        public String transferMoney(@RequestParam String accountFrom, @RequestParam String accountTo, @RequestParam int amount) {
         return bankService.transferMoney(accountFrom, accountTo, amount);
     }
 

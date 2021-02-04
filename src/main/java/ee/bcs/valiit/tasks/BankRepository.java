@@ -27,7 +27,7 @@ public class BankRepository {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @CrossOrigin
+
     public void createCustomerBody(CustomerData bankCustomer) {
         String sql = "INSERT INTO customers (customers_id, customers_address, customers_name, customers_pw_uncoded, customers_pw_coded) " +
                 "VALUES (:cust_id, :customer_addressKey, :cust_nameKey, :cust_pw_uncoded, :cust_pw_coded)";
@@ -40,7 +40,7 @@ public class BankRepository {
         paraMap.put("cust_pw_coded", codedPassword);
         jdbcTemplate.update(sql, paraMap);
     }
-    @CrossOrigin
+
     public void createCustomerAccount(Accounts bankAccount) {
         String sql = "INSERT INTO accounts (accounts_cust_id, accounts_type, accounts_number, accounts_balance) " +
                 "VALUES (:acc_cust_id, :acc_type, :acc_nr, :acc_balance)";
@@ -76,7 +76,7 @@ public class BankRepository {
             throw new MyException("Wrong entry. Your error!");
         }
     }
-    @CrossOrigin
+
     public int updateAccountBalance(@RequestParam String account_nr_to, @RequestParam Integer newAccBalance) {
         String sql2 = "UPDATE accounts SET accounts_balance = :newAccBalanceKey WHERE accounts_number = :accParam";
         Map<String, Object> paraMap2 = new HashMap<>();

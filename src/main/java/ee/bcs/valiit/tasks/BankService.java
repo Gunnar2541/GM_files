@@ -91,8 +91,8 @@ public class BankService {
             bankRepository.dataToTransHistory(accountFrom, accountTo, "TO acc to acc transfer", amount, newAccBalanceTo, strDate);
         }
         return "The balance after transactions is: \n " +
-                "for the account: " + accountFrom + ", the balance after outgoing transfer is: " + newAccBalanceFrom + "\n" +
-                "for the account: " + accountTo + ", the balance after incoming transfer is: " + newAccBalanceTo;
+                "for the account: " + accountFrom + ", the balance after outgoing transfer is: " + newAccBalanceFrom + ".\n" +
+                " For the account: " + accountTo + ", the balance after incoming transfer is: " + newAccBalanceTo;
     }
     public List<CustomerData> getCustomerList() {
         return bankRepository.bankCustomers();
