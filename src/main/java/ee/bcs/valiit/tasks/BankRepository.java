@@ -123,13 +123,6 @@ public class BankRepository {
         }
     }
 
-//    public List<Accounts> bankCustomersAndAccounts() {
-//        String sql = "SELECT * FROM customers e LEFT JOIN accounts v ON e.customers_id = v.accounts_cust_id";
-//        List result = jdbcTemplate.query(sql, new HashMap<>(), new customerAccountsRowMapper());
-//        return result;
-//    }
-
-
     public List<Accounts> bankAccounts() {
         String sql = "SELECT * FROM accounts";
         List result = jdbcTemplate.query(sql, new HashMap<>(), new customerAccountsRowMapper());
@@ -172,14 +165,16 @@ public class BankRepository {
         }
     }
 
-    public List<Accounts> customerTransactionHistory(@RequestParam String custAccNr) {
-        String sql = "SELECT * FROM transaction_history WHERE transaction_history_account_from = :accParam OR" +
-                " transaction_history_account_to = :accParam";
-        List result = jdbcTemplate.query(sql, new HashMap<>(), new customerTransactionHistoryRowMapper());
+    public List<Accounts> customerTransactionHistory(String custAccNr) {
+        String sql = "SELECT * FROM transaction_history WHERE transaction_history_account_from = :accParam " +
+                "AND transaction_history_amount<0 OR transaction_history_account_to = :accParam AND transaction_history_amount>0";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("accParam", custAccNr);
+        List <Accounts> result = jdbcTemplate.query(sql, paramMap, new AccountsRowMapper());
         return result;
     }
 
-    private class customerTransactionHistoryRowMapper implements RowMapper<Accounts> {
+    private class AccountsRowMapper implements RowMapper<Accounts> {
         @Override
         public Accounts mapRow(ResultSet resultSet, int i) throws SQLException {
             Accounts custTransHistory = new Accounts();

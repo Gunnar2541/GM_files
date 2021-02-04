@@ -13,12 +13,12 @@ public class BankControllerMore {
 
     private BankService bankService;
 
-     /*  {
-    "custId":"7777",
-    "custName":"Thomas Dwing",
-    "custAddress":"Dingeling 7"
-    "custPwUncoded":"test"
-     }   */
+    /*  {
+   "custId":"7777",
+   "custName":"Thomas Dwing",
+   "custAddress":"Dingeling 7"
+   "custPwUncoded":"test"
+    }   */
     //  http://localhost:8080/bank/createCustomerB
     @CrossOrigin
     @PostMapping("createCustomerB")
@@ -26,6 +26,7 @@ public class BankControllerMore {
         bankService.createCustomerBody(bankCustomer);
         return "Bank customer has been created.";
     }
+
     /*    {
     "accountCustId":"7777",
     "custAccType":"Current Account",
@@ -65,36 +66,35 @@ public class BankControllerMore {
     // http://localhost:8080/bank/transferMoney?accountFrom=EE2222&accountTo=EE3333&amount=130
     @CrossOrigin
     @PutMapping("transferMoney")
-        public String transferMoney(@RequestParam String accountFrom, @RequestParam String accountTo, @RequestParam int amount) {
+    public String transferMoney(@RequestParam String accountFrom, @RequestParam String accountTo, @RequestParam int amount) {
         return bankService.transferMoney(accountFrom, accountTo, amount);
     }
 
     // http://localhost:8080/bank/customerList
     @CrossOrigin
     @GetMapping("customerList")
-    public List <CustomerData> customerList() {
+    public List<CustomerData> customerList() {
         return bankService.getCustomerList();
     }
-
 
     // http://localhost:8080/bank/customersAccounts
     @CrossOrigin
     @GetMapping("customersAccounts")
-    public List <Accounts> accounts() {
+    public List<Accounts> accounts() {
         return bankService.getAccounts();
     }
 
     // http://localhost:8080/bank/fullTransactionHistory
     @CrossOrigin
     @GetMapping("fullTransactionHistory")
-    public List <Accounts> fullTransactionHistory() {
+    public List<Accounts> fullTransactionHistory() {
         return bankService.getTransactionHistory();
     }
 
-    // http://localhost:8080/bank/customerTransactionHistory?account_nr=EE1234
-   // @CrossOrigin
-   // @GetMapping("customerTransactionHistory")
-   // public List <Accounts> customerTransactionHistory(@RequestParam String account_nr) {
-   //     return bankService.getcustomerTransactionHistory(account_nr);
-   // }
+    //http://localhost:8080/bank/customerTransactionHistory?custAccNr=EE1234
+    @CrossOrigin
+    @GetMapping("customerTransactionHistory")
+    public List<Accounts> customerTransactionHistory(@RequestParam String custAccNr) {
+        return bankService.getcustomerTransactionHistory(custAccNr);
+    }
 }
