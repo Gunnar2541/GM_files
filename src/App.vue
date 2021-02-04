@@ -2,7 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/register">Register Customer</router-link> |
+      <router-link to="/accounts">Create Customer account</router-link> |
+      <router-link to="/transactions">Execute transaction</router-link> |
+      <router-link to="/reports">Reports</router-link>
     </div>
     <router-view/>
   </div>
@@ -14,6 +17,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+
   color: #2c3e50;
 }
 
