@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Login</router-link> |
       <router-link to="/register">Register Customer</router-link> |
       <router-link to="/accounts">Create Customer account</router-link> |
       <router-link to="/transactions">Execute transaction</router-link> |

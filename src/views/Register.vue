@@ -33,7 +33,7 @@
 
 let getData = function () {
   this.$http.get("http://localhost:8080/bank/customerList")
-      .then(response => this.customers = response.data)
+      .then(response => this.customers = response.data) //(siit stored ära tokeni loginist)
       .catch(response => console.log(response))
 }
 
@@ -56,9 +56,9 @@ export default {
   methods: {
     saveCustDataInHtml: saveInJs,
     getCustData: getData
-  },
-  mounted() {
-    this.getData();  //kui sellele lehele lähed, tõmba käima see funktsioon. So automaatne triger
+//  },
+//  mounted() {
+//    this.getData();  //kui sellele lehele lähed, tõmba käima see funktsioon. So automaatne triger
   }
 }
 </script>
