@@ -5,6 +5,8 @@ public class CustomerData {
     private String custId;
     private String custName;
     private String custAddress;
+    private String custPwCoded;
+    private String custPwUncoded;
 
     public String getCustPwCoded() {
         return custPwCoded;
@@ -22,8 +24,7 @@ public class CustomerData {
         this.custPwUncoded = custPwUncoded;
     }
 
-    private String custPwCoded;
-    private String custPwUncoded;
+
 
     public String getCustName() {
         return custName;

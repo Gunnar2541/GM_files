@@ -2,7 +2,6 @@ package ee.bcs.valiit.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("bank")
@@ -39,7 +38,7 @@ public class BankControllerMore {
         bankService.createCustomerAccount(bankAccount);
         return "Account has been created";
     }
-
+    // token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI1MjIwOTMsImV4cCI6MTYxMjUyMzUzMywiaXNzIjoidGVzdCBzdHVkZW50IiwidXNlck5hbWUiOiJhZG1pbiJ9.zj71O5DteN0Wh1I2SXS0YskdD-UjoOD9woCMlJlx_OM
     // http://localhost:8080/bank/accountBalance?account_nr=EE6666
     @CrossOrigin
     @GetMapping("accountBalance")

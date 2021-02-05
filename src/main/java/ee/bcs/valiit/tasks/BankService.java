@@ -37,8 +37,8 @@ public class BankService {
             return bankRepository.accountBalance(account_nr);
     }
 
-    //public String userPassword(String cust_id) {
-    //    return bankRepository.userPassword(cust_id); }
+    public String userPassword(String cust_id) {
+        return bankRepository.userPassword(cust_id); }
 
 
     @Transactional
